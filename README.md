@@ -33,7 +33,7 @@ Java Swing を用いた gui と、Python（pandas）＋SQLite を組み合わせ
 
 ## 動作環境・前提条件
 
-- Windows11
+- Windows 11
 
 * Java 17 以上
 
@@ -41,22 +41,24 @@ Java Swing を用いた gui と、Python（pandas）＋SQLite を組み合わせ
 
 * pandas, matplotlib, sqlite3
 
+* SQLite 3
+
 + Git
 
 ## インストール手順
-
 
 1. リポジトリをクローン
 
 ```bash
 git clone https://github.com/AZ-1299/stock_analysis.git
+cd stock_analysis
 ```
 
 2. Python 仮想環境を作成・有効化
 
 ```bash
 python3 -m venv venv
-source venv/bin/activate
+source venv/Script/activate
 ```
 
 3. 依存パッケージをインストール
@@ -69,26 +71,22 @@ pip install -r requirements.txt
 
 ```bash
 cd stock_analysis
-javac -encoding UTF-8 -d bin front_end/gui/*.java
+javac front_end/gui/*.java
 ```
 
 ## 実行方法
 
-1. ルートディレクトリで実行
+1. プロジェクトルートへ移動
 
 ```bash
 cd stock_analysis
 ```
 
-2. Java Guiを起動
+2. Java GUI を起動
 
 ```bash
 java -cp front_end/gui/Common_obj.java
 ```
-
-1. Java gui から CSV を選択すると、Python スクリプトがバックエンドで実行されます
-
-2. 分析結果は gui 上に表示され、グラフは output/ フォルダに保存されます
 
 ## 今後の開発予定
 
