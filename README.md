@@ -81,8 +81,6 @@ java -cp front_end/bin stock_analysis.front_end.Gui.Main
 
 2. 分析結果は GUI 上に表示され、グラフは output/ フォルダに保存されます
 
-```
-
 ## 今後の開発予定
 
 - 株価 API 連携／自動更新機能
