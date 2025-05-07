@@ -5,7 +5,7 @@
 ## 概要
 
 本リポジトリは、日本の個人投資家向けに開発中の「個別株ポートフォリオ分析ツール」です。
-Java Swing を用いた GUI と、Python（pandas）＋SQLite を組み合わせた分析エンジンで構成されています。
+Java Swing を用いた gui と、Python（pandas）＋SQLite を組み合わせた分析エンジンで構成されています。
 
 ## 主な機能
 
@@ -24,7 +24,7 @@ Java Swing を用いた GUI と、Python（pandas）＋SQLite を組み合わせ
 ## システム構成
 
 ```
-[CSV入力] → [Java Swing GUI]
+[CSV入力] → [Java Swing gui]
                    ↘
                  [Python 分析エンジン] → [SQLite DB]
                      ↘
@@ -33,9 +33,11 @@ Java Swing を用いた GUI と、Python（pandas）＋SQLite を組み合わせ
 
 ## 動作環境・前提条件
 
-- Java 8 以上
+- Windows11
 
-* Python 3.8 以上
+* Java 17 以上
+
+* Python 3.11 以上
 
 * pandas, matplotlib, sqlite3
 
@@ -66,8 +68,8 @@ pip install -r requirements.txt
 4. Java プロジェクトをビルド
 
 ```bash
-cd front_end
-javac -d bin src/**/*.java
+cd stock_analysis
+javac -encoding UTF-8 -d bin front_end/gui/*.java
 ```
 
 ## 実行方法
@@ -78,15 +80,15 @@ javac -d bin src/**/*.java
 cd stock_analysis
 ```
 
-2. Java GUIを起動
+2. Java Guiを起動
 
 ```bash
-java -cp front_end/bin stock_analysis.front_end.Gui.Main
+java -cp front_end/gui/Common_obj.java
 ```
 
-1. Java GUI から CSV を選択すると、Python スクリプトがバックエンドで実行されます
+1. Java gui から CSV を選択すると、Python スクリプトがバックエンドで実行されます
 
-2. 分析結果は GUI 上に表示され、グラフは output/ フォルダに保存されます
+2. 分析結果は gui 上に表示され、グラフは output/ フォルダに保存されます
 
 ## 今後の開発予定
 
