@@ -22,13 +22,17 @@ Java Swing を用いた GUI と、Python（pandas）＋SQLite を組み合わせ
 6.株価チャート：Matplotlib による銘柄別株価推移グラフ生成
 
 ## システム構成
+
 ```
+
 [CSV入力] → [Java Swing GUI]
                    ↘
                  [Python 分析エンジン] → [SQLite DB]
                      ↘
               [グラフ描画 (Matplotlib)]
+
 ```
+
 ## 動作環境・前提条件
 
 - Java 8 以上
@@ -40,7 +44,9 @@ Java Swing を用いた GUI と、Python（pandas）＋SQLite を組み合わせ
 + Git
 
 ## インストール手順
+
 ```
+
 #１．リポジトリをクローン
 
 git clone https://github.com/AZ-1299/stock_analysis.git
@@ -58,9 +64,13 @@ pip install -r requirements.txt
 
 cd front_end
 javac -d bin src/**/*.java
+
 ```
+
 ## 実行方法
-#```
+
+```
+
 # ルートディレクトリで実行
 cd stock_analysis
 # Java GUIを起動
