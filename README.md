@@ -45,22 +45,35 @@ Java Swing を用いた GUI と、Python（pandas）＋SQLite を組み合わせ
 
 ## インストール手順
 
-```
 
-#１．リポジトリをクローン
+1. リポジトリをクローン
+
+```
 
 git clone https://github.com/AZ-1299/stock_analysis.git
 
-#２．Python 仮想環境を作成・有効化
+```
+
+2. Python 仮想環境を作成・有効化
+
+```
 
 python3 -m venv venv
 source venv/bin/activate
 
-#３．依存パッケージをインストール
+```
+
+3. 依存パッケージをインストール
+
+```
 
 pip install -r requirements.txt
 
-#４．Java プロジェクトをビルド
+```
+
+4. Java プロジェクトをビルド
+
+```
 
 cd front_end
 javac -d bin src/**/*.java
@@ -69,12 +82,19 @@ javac -d bin src/**/*.java
 
 ## 実行方法
 
+1. ルートディレクトリで実行
+
 ```
 
-# ルートディレクトリで実行
 cd stock_analysis
-# Java GUIを起動
+
+```
+
+2. Java GUIを起動
+
+```
 java -cp front_end/bin stock_analysis.front_end.Gui.Main
+
 ```
 
 1. Java GUI から CSV を選択すると、Python スクリプトがバックエンドで実行されます
@@ -91,11 +111,13 @@ java -cp front_end/bin stock_analysis.front_end.Gui.Main
 
 ## ライセンス
 
-All Rights Reserved本リポジトリのコード・ドキュメントは無断転載・再配布を禁じます。
+All Rights Reserved
+本リポジトリのコード・ドキュメントは無断転載・再配布を禁じます。
 
 ## 提出用備考
 
-本リポジトリはインターン応募用に限定公開しています。閲覧には権限が必要です。
+- 本リポジトリはインターン応募用に限定公開しています。アクセス権限が必要です。
 
-ご質問・ご要望があれば README の Issues までお問い合わせください。
++ ご質問・ご要望はIssue機能からお問い合わせください。
+
 
