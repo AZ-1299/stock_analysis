@@ -1,45 +1,51 @@
 # 個別株ポートフォリオ分析ツール
 
-
-
 ## 概要
 
-本リポジトリは、日本の個人投資家向けに開発中の「個別株ポートフォリオ分析ツール」です。
-Java Swing を用いた gui と、Python（pandas）＋SQLite を組み合わせた分析エンジンで構成されています。
+日本の個人投資家向けに開発中の「個別株ポートフォリオ分析ツール」です。Java Swing GUI と、Python（pandas）＋SQLite による分析エンジンで構成されています。
 
-## 主な機能
+## 主な機能（実装済み）
 
-1.CSV 読込：東証データやユーザー指定 CSV から銘柄情報を抽出
++ CSV読込：ユーザーが指定したCSVファイルから銘柄情報を抽出
 
-2.構成比表示：業種別・銘柄別の保有比率をグラフで可視化
+## 今後の開発予定（未実装）
 
-3.損益・配当トレンド：損益推移と配当実績を時系列で表示
+- **東証データ抽出**：TSE_data.csv から銘柄の業種・属性を抽出  
 
-4.指標取得：PER/PBR/EPS を外部 API またはローカル DB から自動取得
+- **構成比表示**：業種別・銘柄別の保有比率を円グラフ・棒グラフで可視化  
 
-5.配当予測：想定年間配当額と配当利回りを算出
+- **損益・配当トレンド**：損益推移と配当実績を時系列グラフで表示  
 
-6.株価チャート：Matplotlib による銘柄別株価推移グラフ生成
+- **指標取得**：PER／PBR／EPSを外部APIまたはローカルDBから自動取得  
+
+- **配当予測**：想定年間配当額および配当利回りを算出  
+
+- **株価チャート**：株価推移をMatplotlibで描画  
+
+- **株価API連携と自動更新機能**  
+
+- **Webアプリ化（Flask＋REST API）**  
+
+- **機械学習によるレコメンデーション機能**  
 
 ## システム構成
+以下のフローでデータ処理と表示を行います。
 
 ```
-[CSV入力] → [Java Swing gui]
-                   ↘
-                 [Python 分析エンジン] → [SQLite DB]
-                     ↘
-              [グラフ描画 (Matplotlib)]
+[CSV入力]
+    ↓
+[Java Swing GUI] ──→ [Python分析エンジン] ──→ [SQLite DB]
+                               ↓
+                       [Matplotlibでグラフ描画]
 ```
 
 ## 動作環境・前提条件
 
-- Windows 11
+- Java 8以上（JDKがインストールされていること）
 
-* Java 17 以上
+* Python 3.8以上
 
-* Python 3.11 以上
-
-* pandas, matplotlib, sqlite3
+* Pythonライブラリ：pandas, matplotlib, sqlite3
 
 * SQLite 3
 
@@ -54,14 +60,15 @@ git clone https://github.com/AZ-1299/stock_analysis.git
 cd stock_analysis
 ```
 
-2. Python 仮想環境を作成・有効化
+2. Python仮想環境の作成と有効化
 
 ```bash
 python3 -m venv venv
-source venv/Script/activate
+source venv/bin/activate    # Linux/Mac
+# Windows (PowerShell): .\\venv\\Scripts\\Activate.ps1
 ```
 
-3. 依存パッケージをインストール
+3. 依存パッケージのインストール
 
 ```bash
 pip install -r requirements.txt
@@ -70,13 +77,17 @@ pip install -r requirements.txt
 4. Java プロジェクトをビルド
 
 ```bash
-cd stock_analysis
-javac front_end/gui/*.java
+cd front_end
+# Unix系シェル
+javac -d bin src/**/*.java
+# Windows PowerShell
+Get-ChildItem -Recurse -Filter "*.java" | %{ javac -d bin $_.FullName }
+cd ..
 ```
 
 ## 実行方法
 
-1. プロジェクトルートへ移動
+1. リポジトリのルートへ移動
 
 ```bash
 cd stock_analysis
@@ -85,16 +96,20 @@ cd stock_analysis
 2. Java GUI を起動
 
 ```bash
-java -cp front_end/gui/Common_obj.java
+# Linux/Mac
+java -cp front_end/bin stock_analysis.front_end.Gui.Main
+# Windows
+java -cp front_end\\bin stock_analysis.front_end.Gui.Main
 ```
 
-## 今後の開発予定
+3. CSVを選択
+- GUI上の「CSV読込」ボタンをクリックすると、Pythonスクリプトがバックエンドで実行されます。
 
-- 株価 API 連携／自動更新機能
+4. 結果の確認
 
-* Web アプリ化（Flask + REST API）
+- 分析結果はGUI上に表示。
 
-+ 機械学習によるレコメンデーション
++ グラフは output/ フォルダにPNG形式で保存されます。
 
 ## ライセンス
 
