@@ -41,26 +41,24 @@
 
 ## 動作環境・前提条件
 
-- Java 8以上（JDKがインストールされていること）
+- **Java 8以上（JDKがインストールされていること）**
 
-* Python 3.8以上
+* **Python 3.8以上**
 
-* Pythonライブラリ：pandas, matplotlib, sqlite3
+* **Pythonライブラリ**：pandas, matplotlib, sqlite3
 
-* SQLite 3
-
-+ Git
++ **バージョン管理**：Git
 
 ## インストール手順
 
-1. リポジトリをクローン
+1. **リポジトリをクローン**
 
 ```bash
 git clone https://github.com/AZ-1299/stock_analysis.git
 cd stock_analysis
 ```
 
-2. Python仮想環境の作成と有効化
+2. **Python仮想環境の作成と有効化**
 
 ```bash
 python3 -m venv venv
@@ -68,13 +66,13 @@ source venv/bin/activate    # Linux/Mac
 # Windows (PowerShell): .\\venv\\Scripts\\Activate.ps1
 ```
 
-3. 依存パッケージのインストール
+3. **依存パッケージのインストール**
 
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Java プロジェクトをビルド
+4. **Java プロジェクトをビルド**
 
 ```bash
 cd front_end
@@ -87,13 +85,13 @@ cd ..
 
 ## 実行方法
 
-1. リポジトリのルートへ移動
+1. **リポジトリのルートへ移動**
 
 ```bash
 cd stock_analysis
 ```
 
-2. Java GUI を起動
+2. **Java GUI を起動**
 
 ```bash
 # Linux/Mac
@@ -102,10 +100,10 @@ java -cp front_end/bin stock_analysis.front_end.Gui.Main
 java -cp front_end\\bin stock_analysis.front_end.Gui.Main
 ```
 
-3. CSVを選択
+3. **CSVを選択**
 - GUI上の「CSV読込」ボタンをクリックすると、Pythonスクリプトがバックエンドで実行されます。
 
-4. 結果の確認
+4. **結果の確認**
 
 - 分析結果はGUI上に表示。
 
