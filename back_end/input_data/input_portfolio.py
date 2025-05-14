@@ -87,7 +87,7 @@ def extract_section(df, keyword, output_filename):
     df_data = pd.DataFrame(records, columns=koumoku)
 
     # ——— CSV出力 ———
-    output_path = os.path.join(self_path, "..", "database", output_filename)
+    output_path = os.path.join(self_path,output_filename)
     df_data.to_csv(output_path, index=False, encoding="utf-8-sig")
     logging.info(f"{keyword} 出力：{output_path}")
 
