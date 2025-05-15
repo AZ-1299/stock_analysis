@@ -1,4 +1,4 @@
-package stock_analysis.front_end.Gui;
+package stock_analysis.front_end.gui;
 
 import java.awt.Component;
 import java.io.*;
@@ -14,10 +14,9 @@ public class controller {
     
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = filechooser.getSelectedFile();
-            System.out.println("選択されたファイル: " + selectedFile.getPath());
     
             try {
-                // アプリの実行ディレクトリを取得（最上位の階層が異なっていても指定可能）
+                // アプリの実行ディレクトリを取得
                 Path input_path = Paths.get(self_path)
                                             .getParent()
                                             .resolve("..")
