@@ -16,6 +16,7 @@ public class Controller  {
 
 
     public void java2python(Component parent) {
+        System.out.println("Coll out Java2Python");
         String selfPath = new File("controller.java").getAbsolutePath();
         logger.info("controller.java path is " + selfPath);
         JFileChooser filechooser = new JFileChooser();
@@ -50,17 +51,16 @@ public class Controller  {
                     System.out.println("ファイルコピーに失敗しました");
                 }
         }
-                Path scriptPath = Paths.get(selfPath)
-                       .getParent() // controller.java の親ディレクトリ
-                       .resolve("..") // 一つ上へ
-                       .resolve("..")
-                       .resolve("back_end")
-                       .resolve("input_data")
-                       .resolve("input_portfolio.py")
-                       .normalize(); // 相対パスを正規化
+                Path scriptPath = Paths.get(
+                    selfPath,    
+                    "..","..",   
+                    "back_end",
+                    "input_data",
+                    "input_portfolio.py"
+                ).normalize();
                 //File go2py_path = currentDir_next.toFile();
                 String pythonScriptPath = scriptPath.toAbsolutePath().toString();
-                ProcessBuilder go2py = new ProcessBuilder("python", pythonScriptPath);                
+                ProcessBuilder go2py = new ProcessBuilder("python", "-u",pythonScriptPath);                
                 // Pythonコードの標準出力をJavaの標準出力に出す
                 go2py.redirectOutput(ProcessBuilder.Redirect.INHERIT);
                 go2py.redirectError(ProcessBuilder.Redirect.INHERIT);

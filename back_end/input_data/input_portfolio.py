@@ -5,7 +5,7 @@ import unicodedata
 import csv
 
 logging.basicConfig(level=logging.INFO)
-
+print("input_portfolio 開始")
 # ——— 全角⇔半角などの揺れを吸収 ———
 def normalize(text):
     return unicodedata.normalize("NFKC", str(text))
@@ -97,3 +97,4 @@ extract_section(df_all, "つみたて投資枠", "user_portfolio_accumulate.csv"
 extract_section(df_all, "特定預り","user_portfolio_spot.csv")
 
 logging.info("株式データの抽出完了")
+print("input_portfolio 終了")

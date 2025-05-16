@@ -33,8 +33,8 @@ public class Portfolio extends JPanel {
         file_choice_button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // 他のフォルダのメソッド実行
-                ctrl.java2python(Portfolio.this);
-                System.out.println("controller.javaにアクセス");
+                ctrl.java2python(null);
+                System.out.println("Controller.javaにアクセス");
             }
         });
 

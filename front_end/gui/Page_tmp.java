@@ -10,10 +10,10 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 
 public class Page_tmp extends JPanel{
-    public page_tmp(){
+    public void main_page_tmp(){
         this.setLayout(new GridBagLayout());
         this.setPreferredSize(new Dimension(300, 400));
-
+        
         JLabel ment_label = new JLabel("-メンテナンス中・・・") ;
         ment_label.setForeground(Color.BLACK);
         ment_label.setHorizontalAlignment(JLabel.CENTER);
