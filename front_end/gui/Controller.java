@@ -4,26 +4,33 @@ import java.awt.Component;
 import java.io.*;
 import java.nio.file.*;
 import javax.swing.JFileChooser;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
-public class controller {
-    File file = new File("controller.java");
-    String self_path = file.getAbsolutePath();
-        public void java2python(Component parent) {
+public class Controller  {
+
+    private static final Logger logger = Logger.getLogger(Controller.class.getName());
+    static {
+        logger.setLevel(Level.FINE);
+    }
+
+
+    public void java2python(Component parent) {
+        String selfPath = new File("controller.java").getAbsolutePath();
+        logger.info("controller.java path is " + selfPath);
         JFileChooser filechooser = new JFileChooser();
         int result = filechooser.showOpenDialog(parent);
-    
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = filechooser.getSelectedFile();
-    
             try {
                 // アプリの実行ディレクトリを取得
-                Path input_path = Paths.get(self_path)
-                                            .getParent()
-                                            .resolve("..")
-                                            .resolve("..")
-                                            .resolve("back_end")
-                                            .resolve("input_data")
-                                            .normalize();
+                Path input_path = Paths.get(selfPath,"..","..","back_end","input_data");
+                                            // .getParent()
+                                            // .resolve("..")
+                                            // .resolve("..")
+                                            // .resolve("back_end")
+                                            // .resolve("input_data")
+                                            // .normalize();
                 File inputDir  = input_path.toFile();
                 if (!inputDir .exists()) {
                     inputDir .mkdirs(); // フォルダがなければ作成
@@ -43,7 +50,7 @@ public class controller {
                     System.out.println("ファイルコピーに失敗しました");
                 }
         }
-                Path scriptPath = Paths.get(self_path)
+                Path scriptPath = Paths.get(selfPath)
                        .getParent() // controller.java の親ディレクトリ
                        .resolve("..") // 一つ上へ
                        .resolve("..")

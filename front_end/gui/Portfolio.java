@@ -29,7 +29,7 @@ public class Portfolio extends JPanel {
         file_choice_button.setFont(new Font("Meiryo", Font.PLAIN, 10));
         // file_choice_button.setPreferredSize(new Dimension(100, 20));
 
-        controller ctrl = new controller();
+        Controller ctrl = new Controller();
         file_choice_button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 // 他のフォルダのメソッド実行

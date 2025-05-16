@@ -9,7 +9,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 
-public class page_tmp extends JPanel{
+public class Page_tmp extends JPanel{
     public page_tmp(){
         this.setLayout(new GridBagLayout());
         this.setPreferredSize(new Dimension(300, 400));
