@@ -26,12 +26,7 @@ public class Controller  {
             try {
                 // アプリの実行ディレクトリを取得
                 Path input_path = Paths.get(selfPath,"..","..","back_end","input_data");
-                                            // .getParent()
-                                            // .resolve("..")
-                                            // .resolve("..")
-                                            // .resolve("back_end")
-                                            // .resolve("input_data")
-                                            // .normalize();
+                logger.info("INFO: input_path is:"+input_path);
                 File inputDir  = input_path.toFile();
                 if (!inputDir .exists()) {
                     inputDir .mkdirs(); // フォルダがなければ作成
@@ -58,6 +53,7 @@ public class Controller  {
                     "input_data",
                     "input_portfolio.py"
                 ).normalize();
+                logger.info("scriptPath is:"+scriptPath);
                 //File go2py_path = currentDir_next.toFile();
                 String pythonScriptPath = scriptPath.toAbsolutePath().toString();
                 ProcessBuilder go2py = new ProcessBuilder("python", "-u",pythonScriptPath);                
