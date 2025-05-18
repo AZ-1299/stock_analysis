@@ -19,6 +19,7 @@ public class Common_obj {
         // ファイルを閉じたらプログラム終了（アプリ終了）
         base_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// EXIT_NO_CLOSEの部分変更で内容が変わる
         base_frame.setSize(1000, 700);
+
         // whindowsの中央に配置
         base_frame.setLocationRelativeTo((null));
         base_frame.setLayout(new BorderLayout());
