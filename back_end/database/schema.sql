@@ -11,9 +11,9 @@
 CREATE TABLE users (
   id INTEGER PRIMARY KEY AUTOINCREMENT, --ID:全体紐づけ
   username TEXT UNIQUE, --ユーザネーム
-  password_hash TEXT, --パスワード
+  password_hash TEXT   NOT NULL, --パスワード
   email TEXT UNIQUE, --登録メールアドレス
-  created_at DATETIME DEFAULT CURRENT_TIMESTAMP, --登録日
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP --登録日
   );
 
 CREATE TABLE assets (
@@ -35,7 +35,7 @@ CREATE TABLE prices (
     close_price REAL,--終値
     PER REAL, --その日、銘柄のPER
     PBR REAL, --その日、銘柄のPBR
-    EPS REAL. --その日、銘柄のEPS
+    EPS REAL --その日、銘柄のEPS
 );
 
 CREATE TABLE portfolio_stats (
