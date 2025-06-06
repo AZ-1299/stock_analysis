@@ -5,14 +5,15 @@ import logging
 import pandas as pd
 
 def basicConfig():
-    logger = logging.getLogger()
-    logger.setLevel(logging.INFO)
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(message)s",
+    )
 
 
 def CSV2DB(input_FileDir,input_FilePath,TSE_data_path):
     logging.info("CSV2DB読み込み完了")
     input_FileAbspath = input_FileDir/input_FilePath
-    Output_df = []
 
     # TSEデータの下処理
     in_col_TSE = ["コード","17業種区分"]
@@ -25,16 +26,29 @@ def CSV2DB(input_FileDir,input_FilePath,TSE_data_path):
     # ユーザポートフォリオcsv
     in_col = ["コード"]
     df_main = pd.read_csv(input_FileAbspath,encoding="utf-8")
+    df_main_code = df_main.loc[:,in_col]
+    # print(df_main)
+    # print(df_main_code)
     logging.info("ユーザポートフォリオ読み込み完了")
-    
-    #検索
-    for i in df_main:
-        for j in search_TSE_df:
-            if i==j:
-                Output_df
-                
+
+    # merged_df = pd.concat(df_main_code, new_TSE_df, on="コード", how="left")
+
+    # print(merged_df)
+
+    # print(search_TSE_df)
+    # for i in df_main_code:
+        # print(i)
+
+    # #検索
+    # for i in df_main_code:
+    #     logging.info(f"検索内容は {i}")
+    #     for j in in_col_TSE:
+    #         if i==j:
+    #             logging.info(f"検索にヒット。ヒット= {j}")
+    # logging.info("検索終了")
 
 if __name__ == "__main__":
+    basicConfig()
     self_path = Path(__file__)
     parents_dir = self_path.resolve().parents[1]
     print(f"inpout is   {parents_dir}")
