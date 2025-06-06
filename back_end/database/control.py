@@ -31,9 +31,9 @@ def CSV2DB(input_FileDir,input_FilePath,TSE_data_path):
     # print(df_main_code)
     logging.info("ユーザポートフォリオ読み込み完了")
 
-    # merged_df = pd.concat(df_main_code, new_TSE_df, on="コード", how="left")
+    merged_df = pd.merge(df_main_code, new_TSE_df, on="コード", how="right")
 
-    # print(merged_df)
+    print(merged_df)
 
     # print(search_TSE_df)
     # for i in df_main_code:
