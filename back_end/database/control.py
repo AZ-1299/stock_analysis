@@ -18,14 +18,14 @@ def CSV2DB(input_FileDir,input_FilePath,TSE_data_path):
     # TSEデータの下処理
     in_col_TSE = ["コード","17業種区分"]
     in_col_TSE_search = "コード"
-    TSE_df = pd.read_csv(TSE_data_path,encoding="cp932")
+    TSE_df = pd.read_csv(TSE_data_path, encoding="cp932", dtype={"コード": str})
     logging.info("TSEデータ読み込み完了")
     new_TSE_df = TSE_df.loc[:,in_col_TSE]
-    search_TSE_df =TSE_df.loc[:,in_col_TSE_search]
+    # search_TSE_df =TSE_df.loc[:,in_col_TSE_search]
 
     # ユーザポートフォリオcsv
     in_col = ["コード"]
-    df_main = pd.read_csv(input_FileAbspath,encoding="utf-8")
+    df_main = pd.read_csv(input_FileAbspath, encoding="utf-8", dtype={"コード": str})
     df_main_code = df_main.loc[:,in_col]
     # print(df_main)
     # print(df_main_code)
@@ -33,7 +33,7 @@ def CSV2DB(input_FileDir,input_FilePath,TSE_data_path):
 
     merged_df = pd.merge(df_main_code, new_TSE_df, on="コード", how="right")
 
-    print(merged_df)
+    # print(merged_df)
 
     # print(search_TSE_df)
     # for i in df_main_code:
