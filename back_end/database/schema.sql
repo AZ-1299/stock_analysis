@@ -21,11 +21,13 @@ CREATE TABLE assets (
     user_id INTEGER,
     symbol_num TEXT,        -- 銘柄コード
     symbol_name TEXT,
-    purchase_date DATE, --購入日
-    purchase_price REAL, --購入価格(単価)
     shares INTEGER,  --購入株数
+    purchase_price REAL, --購入価格(単価)
+    now_purchase_price REAL, --現在の価格（単価）
+    Profit_Loss REAL, --損益（金額）
+    Profit_Loss_ratio FLOAT , --損益率
+    Indaustry TEXT,--業種
     account_type TEXT, --口座タイプ
-    nisa_type TEXT, --NISAタイプ
     FOREIGN KEY(user_id) REFERENCES users(id)
 );
 

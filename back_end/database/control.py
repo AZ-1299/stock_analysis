@@ -13,32 +13,40 @@ def basicConfig():
 
 def CSV2DB(input_FileDir,input_FilePath,TSE_data_path):
     logging.info("CSV2DB読み込み完了")
-    input_FileAbspath = input_FileDir/input_FilePath
+    try:
+        input_FileAbspath = input_FileDir/input_FilePath
 
-    # TSEデータの下処理
-    in_col_TSE = ["コード","33業種区分"]
-    TSE_df = pd.read_csv(TSE_data_path, encoding="cp932", dtype={"コード": str})
-    # print(TSE_df)
-    logging.info("TSEデータ読み込み完了")
-    new_TSE_df = TSE_df.loc[:,in_col_TSE]
+        if input_FilePath == "user_portfolio_special.csv":
+            acoount = "NISA"
+        elif input_FilePath == "user_portfolio_accumulate.csv":
+            acoount = "NISA"
+        else:
+            acoount = "非NISA"
 
-    # ユーザポートフォリオcsv
-    in_col = ["コード"]
-    df_main = pd.read_csv(input_FileAbspath, encoding="utf-8", dtype={"コード": str})
-    df_main_code = df_main.loc[:,in_col]
-    # print(df_main)
-    logging.info("ユーザポートフォリオ読み込み完了")
+        # TSEデータの下処理
+        in_col_TSE = ["コード","33業種区分",]
+        TSE_df = pd.read_csv(TSE_data_path, encoding="cp932", dtype={"コード": str})
+        # print(TSE_df)
+        logging.info("TSEデータ読み込み完了")
+        new_TSE_df = TSE_df.loc[:,in_col_TSE]
 
-    merged_df = pd.merge(df_main_code, new_TSE_df, on="コード", how="left")
+        # ユーザポートフォリオcsv
+        in_col = ["コード"]
+        df_main = pd.read_csv(input_FileAbspath, encoding="utf-8", dtype={"コード": str})
+        df_main_code = df_main.loc[:,in_col]
+        # print(df_main)
+        logging.info("ユーザポートフォリオ読み込み完了")
 
-    # print(merged_df)
+        merged_df = pd.merge(df_main_code, new_TSE_df, on="コード", how="left")
+        merged_df["口座"] = acoount
 
-    merged_df = pd.merge(df_main, merged_df, on="コード", how="left")
-    merged_df = merged_df.drop(columns=["買付日","前日比", "前日比（％）"])
-    print(merged_df)
+        # print(merged_df)
 
-
-
+        merged_df = pd.merge(df_main, merged_df, on="コード", how="left")
+        merged_df = merged_df.drop(columns=["買付日","前日比", "前日比（％）"])
+        print(merged_df)
+    except:
+        print("入力したファイルにデータはありませんでした。")
 
 if __name__ == "__main__":
     basicConfig()
@@ -49,3 +57,6 @@ if __name__ == "__main__":
 
     input_FileDir = parents_dir /"input_data"
     CSV2DB(input_FileDir,"user_portfolio_special.csv",TSE_data_path)
+    CSV2DB(input_FileDir,"user_portfolio_accumulate.csv",TSE_data_path)
+    
+
