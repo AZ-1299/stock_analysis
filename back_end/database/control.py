@@ -10,9 +10,21 @@ def basicConfig():
         format="%(asctime)s [%(levelname)s] %(message)s",
     )
 
-# def DF2DB(parents_dir):
-#     out_path = parents_dir/"user_data"
-#     with open(csv_path, "r", encoding="cp932") as f:
+def init_DF2DB(parents_dir):
+    sql_path = parents_dir/"init.sql"
+    out_path = parents_dir/"user_data"/"user_database.db"
+    with open(sql_path, "r", encoding="cp932") as f:
+        sql_text = f.read
+    # データベース作成
+    conn = sqlite3.connect(out_path)
+    cursor = conn.cursor()
+
+    # SQLスクリプトを実行
+    cursor.executescript(sql_text)
+
+    # 保存して閉じる
+    conn.commit()
+    conn.close()
 
 
 def CSV2DF(input_FileDir,input_FilePath,TSE_data_path):
