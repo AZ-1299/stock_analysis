@@ -10,9 +10,9 @@ def basicConfig():
         format="%(asctime)s [%(levelname)s] %(message)s",
     )
 
-def DF2DB(parents_dir):
-    out_path = parents_dir/"user_data"
-    with open(csv_path, "r", encoding="cp932") as f:
+# def DF2DB(parents_dir):
+#     out_path = parents_dir/"user_data"
+#     with open(csv_path, "r", encoding="cp932") as f:
 
 
 def CSV2DF(input_FileDir,input_FilePath,TSE_data_path):
