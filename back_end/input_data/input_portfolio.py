@@ -6,33 +6,33 @@ import csv
 
 logging.basicConfig(level=logging.INFO)
 print("input_portfolio 開始")
-# ——— 全角⇔半角などの揺れを吸収 ———
+#全角⇔半角などの揺れを吸収
 def normalize(text):
     return unicodedata.normalize("NFKC", str(text))
 
-# ——— パス設定 ———
+#パス設定
 self_path = os.path.dirname(os.path.abspath(__file__))
 csv_path = os.path.join(self_path, "New_file.csv")
 
-# ——— カラム名（10列） ———
+#カラム名
 koumoku = [
     "コード", "銘柄名",
      "買付日", "数量", "取得単価", "現在値",
      "前日比", "前日比（％）", "損益", "損益（％）", "評価額"
 ]
 
-# ——— CSVを行ごとに読込 ———
+#  CSVを行ごとに読込
 with open(csv_path, "r", encoding="cp932") as f:
     reader = csv.reader(f)
     lines = [row for row in reader if row]
 
-# ——— raw 行を DataFrame にしてロギング用に保持 ———
+#  raw 行を DataFrame にしてロギング用に保持
 raw_lines = [" ".join(row) for row in lines]
 df_all = pd.DataFrame({"raw": raw_lines})
 df_all["raw"] = df_all["raw"].map(normalize)
 logging.info("ファイル読み込み成功")
 
-# ——— セクション抽出関数 ———
+#  セクション抽出関数 
 def extract_section(df, keyword, output_filename):
     keyword = normalize(keyword)
 
@@ -58,7 +58,7 @@ def extract_section(df, keyword, output_filename):
 
     logging.info(f"「銘柄（コード）」の行番号: {code_line_idx}")
 
-    # ——— 実データ行を抽出（次のセクションで break） ———
+    #  実データ行を抽出（次のセクションで break）
     data_lines = lines[code_line_idx + 1:]
     records = []
     for row in data_lines:
@@ -86,12 +86,12 @@ def extract_section(df, keyword, output_filename):
 
     df_data = pd.DataFrame(records, columns=koumoku)
 
-    # ——— CSV出力 ———
+    #  CSV出力 
     output_path = os.path.join(self_path,output_filename)
     df_data.to_csv(output_path, index=False, encoding="utf-8-sig")
     logging.info(f"{keyword} 出力：{output_path}")
 
-# ——— 各セクションを個別株として抽出 ———
+#  各セクションを個別株として抽出 
 extract_section(df_all, "成長投資枠", "user_portfolio_special.csv")
 extract_section(df_all, "つみたて投資枠", "user_portfolio_accumulate.csv")
 extract_section(df_all, "特定預り","user_portfolio_spot.csv")

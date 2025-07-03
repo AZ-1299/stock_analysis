@@ -10,9 +10,13 @@ def basicConfig():
         format="%(asctime)s [%(levelname)s] %(message)s",
     )
 
+def DF2DB(parents_dir):
+    out_path = parents_dir/"user_data"
+    with open(csv_path, "r", encoding="cp932") as f:
 
-def CSV2DB(input_FileDir,input_FilePath,TSE_data_path):
-    logging.info("CSV2DB読み込み完了")
+
+def CSV2DF(input_FileDir,input_FilePath,TSE_data_path):
+    logging.info("CSV2DF読み込み完了")
     try:
         input_FileAbspath = input_FileDir/input_FilePath
 
@@ -56,9 +60,9 @@ if __name__ == "__main__":
     TSE_data_path = self_path/".."/"static"/"TSE_data.csv"
 
     input_FileDir = parents_dir /"input_data"
-    CSV2DB(input_FileDir,"user_portfolio_special.csv",TSE_data_path)
-    CSV2DB(input_FileDir,"user_portfolio_accumulate.csv",TSE_data_path)
-    # CSV2DB(input_FileDir,"user_portfolio_spot.csv",TSE_data_path)
+    CSV2DF(input_FileDir,"user_portfolio_special.csv",TSE_data_path)
+    CSV2DF(input_FileDir,"user_portfolio_accumulate.csv",TSE_data_path)
+    # CSV2DF(input_FileDir,"user_portfolio_spot.csv",TSE_data_path)
 
     
 
