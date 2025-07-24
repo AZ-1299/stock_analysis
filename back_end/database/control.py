@@ -15,14 +15,11 @@ def init_DF2DB(parents_dir):
     out_path = parents_dir/"user_data"/"user_database.db"
     with open(sql_path, "r", encoding="cp932") as f:
         sql_text = f.read
-    # データベース作成
+
     conn = sqlite3.connect(out_path)
     cursor = conn.cursor()
 
-    # SQLスクリプトを実行
     cursor.executescript(sql_text)
-
-    # 保存して閉じる
     conn.commit()
     conn.close()
 
@@ -39,14 +36,14 @@ def CSV2DF(input_FileDir,input_FilePath,TSE_data_path):
         else:
             acoount = "非NISA"
 
-        # TSEデータの下処理
+
         in_col_TSE = ["コード","33業種区分",]
         TSE_df = pd.read_csv(TSE_data_path, encoding="cp932", dtype={"コード": str})
         # print(TSE_df)
         logging.info("TSEデータ読み込み完了")
         new_TSE_df = TSE_df.loc[:,in_col_TSE]
 
-        # ユーザポートフォリオcsv
+        
         in_col = ["コード"]
         df_main = pd.read_csv(input_FileAbspath, encoding="utf-8", dtype={"コード": str})
         df_main_code = df_main.loc[:,in_col]
