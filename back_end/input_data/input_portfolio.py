@@ -33,7 +33,7 @@ df_all["raw"] = df_all["raw"].map(normalize)
 logging.info("ファイル読み込み成功")
 
 #  セクション抽出関数 
-def extract_section(df, keyword, output_filename):
+def extract_section(df, keyword, end_owed_1,end_owed_2,output_filename):
     keyword = normalize(keyword)
 
     # セクション見出し行を探す
@@ -41,7 +41,6 @@ def extract_section(df, keyword, output_filename):
     if section_start.empty:
         print(f"「{keyword}」を含むデータは存在しません。")
         return
-
     start_idx = section_start.index[0]
     logging.info(f"「{keyword}」開始行: {start_idx}")
 
@@ -66,17 +65,13 @@ def extract_section(df, keyword, output_filename):
         if "投資信託" in first_col or first_col in ("ファンド名", "総合計"):
             break
 
-        # 10列 or 11列末尾空文字 の行だけ処理
+
         if len(row) == 10 or (len(row) == 11 and row[-1] == ""):
-            # スペースがない行はスキップ
             if " " not in row[0]:
                 continue
 
-            # 「コード」「銘柄名」に分割
             code, name = row[0].split(" ", 1)
-            # 11列なら末尾空文字カラムを削除して10列に整形
             trimmed = row[:-1] if len(row) == 11 else row
-            # 新しい行を作成：コード, 銘柄名, 2列目以降
             new_row = [code, name] + trimmed[1:]
             records.append(new_row)
         
@@ -91,10 +86,9 @@ def extract_section(df, keyword, output_filename):
     df_data.to_csv(output_path, index=False, encoding="utf-8-sig")
     logging.info(f"{keyword} 出力：{output_path}")
 
-#  各セクションを個別株として抽出 
-extract_section(df_all, "成長投資枠", "user_portfolio_special.csv")
-extract_section(df_all, "つみたて投資枠", "user_portfolio_accumulate.csv")
-extract_section(df_all, "特定預り","user_portfolio_spot.csv")
+extract_section(df_all, "成長投資枠","つみたて投資枠","特定預り","user_portfolio_special.csv")
+extract_section(df_all, "つみたて投資枠","特定預り","成長投資枠","user_portfolio_accumulate.csv")
+extract_section(df_all, "特定預り","成長投資枠","つみたて投資枠","user_portfolio_spot.csv")
 
 logging.info("株式データの抽出完了")
 print("input_portfolio 終了")
