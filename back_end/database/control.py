@@ -10,21 +10,24 @@ def basicConfig():
         format="%(asctime)s [%(levelname)s] %(message)s",
     )
 
-def init_DF2DB(parents_dir):
-    sql_path = parents_dir/"init.sql"
-    out_path = parents_dir/"user_data"/"user_database.db"
+def init_DF2DB(parents_dir,df):
+    sql_path = parents_dir/"database"/"init.sql"
+    out_path = parents_dir/"database"/"user_data"/"user_database.db"
     with open(sql_path, "r", encoding="cp932") as f:
         sql_text = f.read
-    # データベース作成
+
     conn = sqlite3.connect(out_path)
+    logging.INFO("DB作成")
     cursor = conn.cursor()
 
-    # SQLスクリプトを実行
     cursor.executescript(sql_text)
 
-    # 保存して閉じる
     conn.commit()
     conn.close()
+
+    with sqlite3.connect("user_database.db") as conn:
+        df.to_sql("コード", conn, if_exists="append", index=False)
+        
 
 
 def CSV2DF(input_FileDir,input_FilePath,TSE_data_path):
@@ -63,6 +66,8 @@ def CSV2DF(input_FileDir,input_FilePath,TSE_data_path):
         print(merged_df)
     except:
         print("入力したファイルにデータはありませんでした。")
+
+    init_DF2DB(parents_dir,merged_df)
 
 if __name__ == "__main__":
     basicConfig()
