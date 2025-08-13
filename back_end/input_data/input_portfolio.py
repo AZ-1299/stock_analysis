@@ -32,20 +32,16 @@ df_all = pd.DataFrame({"raw": raw_lines})
 df_all["raw"] = df_all["raw"].map(normalize)
 logging.info("ファイル読み込み成功")
 
-#  セクション抽出関数 
-def extract_section(df, keyword, output_filename):
+def extract_section(df, keyword, end_owed_1, end_owed_2, output_filename):
     keyword = normalize(keyword)
 
-    # セクション見出し行を探す
     section_start = df[df["raw"].str.contains(keyword, na=False)]
     if section_start.empty:
         print(f"「{keyword}」を含むデータは存在しません。")
         return
-
     start_idx = section_start.index[0]
     logging.info(f"「{keyword}」開始行: {start_idx}")
 
-    # 直後から「銘柄（コード）」行を探す
     code_line_idx = None
     for i in range(start_idx + 1, min(start_idx + 15, len(df))):
         if normalize("銘柄（コード）") in df.loc[i, "raw"]:
@@ -56,45 +52,46 @@ def extract_section(df, keyword, output_filename):
         print(f"「銘柄（コード）」が {keyword} セクション内に見つかりませんでした。")
         return
 
-    logging.info(f"「銘柄（コード）」の行番号: {code_line_idx}")
+    # セクション終端を検出
+    pattern = f"{normalize(end_owed_1)}|{normalize(end_owed_2)}"
+    section_after = df.iloc[code_line_idx+1:]
+    section_end = section_after[section_after["raw"].str.contains(pattern, na=False, regex=True)]
+    end_idx = section_end.index[0] if not section_end.empty else len(df)
+    logging.info(f"終了キーワード検出行: {end_idx}")
 
-    #  実データ行を抽出（次のセクションで break）
-    data_lines = lines[code_line_idx + 1:]
+    # 実データ抽出
+    data_lines = lines[code_line_idx + 1:end_idx]
     records = []
     for row in data_lines:
-        first_col = normalize(row[0])
+        normalized_row = [normalize(cell) for cell in row]
+        first_col = normalized_row[0]
+
         if "投資信託" in first_col or first_col in ("ファンド名", "総合計"):
             break
 
-        # 10列 or 11列末尾空文字 の行だけ処理
-        if len(row) == 10 or (len(row) == 11 and row[-1] == ""):
-            # スペースがない行はスキップ
-            if " " not in row[0]:
+        if len(normalized_row) in [10, 11]:
+            if " " not in first_col:
+                logging.warning(f"スキップ: コードと銘柄名の分離不可: {first_col}")
                 continue
 
-            # 「コード」「銘柄名」に分割
-            code, name = row[0].split(" ", 1)
-            # 11列なら末尾空文字カラムを削除して10列に整形
-            trimmed = row[:-1] if len(row) == 11 else row
-            # 新しい行を作成：コード, 銘柄名, 2列目以降
+            code, name = first_col.split(" ", 1)
+            trimmed = normalized_row[:-1] if len(normalized_row) == 11 else normalized_row
             new_row = [code, name] + trimmed[1:]
             records.append(new_row)
-        
+
     if not records:
         print(f"{keyword} の個別株データが見つかりませんでした。")
         return
 
     df_data = pd.DataFrame(records, columns=koumoku)
-
-    #  CSV出力 
-    output_path = os.path.join(self_path,output_filename)
+    output_path = os.path.join(self_path, output_filename)
     df_data.to_csv(output_path, index=False, encoding="utf-8-sig")
     logging.info(f"{keyword} 出力：{output_path}")
 
-#  各セクションを個別株として抽出 
-extract_section(df_all, "成長投資枠", "user_portfolio_special.csv")
-extract_section(df_all, "つみたて投資枠", "user_portfolio_accumulate.csv")
-extract_section(df_all, "特定預り","user_portfolio_spot.csv")
+
+extract_section(df_all, "成長投資枠","つみたて投資枠","特定預り","user_portfolio_special.csv")
+extract_section(df_all, "つみたて投資枠","特定預り","成長投資枠","user_portfolio_accumulate.csv")
+extract_section(df_all, "特定預り","成長投資枠","つみたて投資枠","user_portfolio_spot.csv")
 
 logging.info("株式データの抽出完了")
 print("input_portfolio 終了")
