@@ -11,22 +11,24 @@ def basicConfig():
     )
 
 def init_DF2DB(parents_dir,df):
-    sql_path = parents_dir/"database"/"init.sql"
+    print("init_DF2DB開始")
+    # sql_path = parents_dir/"database"/"init.sql"
     out_path = parents_dir/"database"/"user_data"/"user_database.db"
-    with open(sql_path, "r", encoding="cp932") as f:
-        sql_text = f.read
+    # with open(sql_path, "r", encoding="cp932") as f:
+    #     sql_text = f.read
 
     conn = sqlite3.connect(out_path)
-    logging.INFO("DB作成")
-    cursor = conn.cursor()
+    cur = conn.cursor()
 
-    cursor.executescript(sql_text)
-
-    conn.commit()
+    df.to_sql('user_database',conn,if_exists='replace')
+    select_sql = 'SELECT * FROM user_database'
+    print("DF2DB完了")
+    for row in cur.execute(select_sql):
+        print(row)
+    cur.close()
     conn.close()
-
-    with sqlite3.connect("user_database.db") as conn:
-        df.to_sql("コード", conn, if_exists="append", index=False)
+    # with sqlite3.connect("user_database.db") as conn:
+    #     df.to_sql("コード", conn, if_exists="append", index=False)
         
 
 
@@ -48,12 +50,12 @@ def CSV2DF(input_FileDir,input_FilePath,TSE_data_path):
         # print(TSE_df)
         logging.info("TSEデータ読み込み完了")
         new_TSE_df = TSE_df.loc[:,in_col_TSE]
-
+        # print(new_TSE_df+"\n")
         # ユーザポートフォリオcsv
         in_col = ["コード"]
         df_main = pd.read_csv(input_FileAbspath, encoding="utf-8", dtype={"コード": str})
         df_main_code = df_main.loc[:,in_col]
-        # print(df_main)
+        print(df_main)
         logging.info("ユーザポートフォリオ読み込み完了")
 
         merged_df = pd.merge(df_main_code, new_TSE_df, on="コード", how="left")
@@ -63,11 +65,13 @@ def CSV2DF(input_FileDir,input_FilePath,TSE_data_path):
 
         merged_df = pd.merge(df_main, merged_df, on="コード", how="left")
         merged_df = merged_df.drop(columns=["買付日","前日比", "前日比（％）"])
+        # df_columns = df_main.columns
+        # print(df_columns)
         print(merged_df)
+        init_DF2DB(parents_dir,merged_df)
     except:
         print("入力したファイルにデータはありませんでした。")
 
-    init_DF2DB(parents_dir,merged_df)
 
 if __name__ == "__main__":
     basicConfig()
