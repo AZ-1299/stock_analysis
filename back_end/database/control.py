@@ -4,34 +4,6 @@ import csv
 import logging
 import pandas as pd
 
-def basicConfig():
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s [%(levelname)s] %(message)s",
-    )
-
-def init_DF2DB(parents_dir,df):
-    print("init_DF2DB開始")
-    # sql_path = parents_dir/"database"/"init.sql"
-    out_path = parents_dir/"database"/"user_data"/"user_database.db"
-    # with open(sql_path, "r", encoding="cp932") as f:
-    #     sql_text = f.read
-
-    conn = sqlite3.connect(out_path)
-    cur = conn.cursor()
-
-    df.to_sql('user_database',conn,if_exists='replace')
-    select_sql = 'SELECT * FROM user_database'
-    print("DF2DB完了")
-    for row in cur.execute(select_sql):
-        print(row)
-    cur.close()
-    conn.close()
-    # with sqlite3.connect("user_database.db") as conn:
-    #     df.to_sql("コード", conn, if_exists="append", index=False)
-        
-
-
 def CSV2DF(input_FileDir,input_FilePath,TSE_data_path):
     logging.info("CSV2DF読み込み完了")
     try:
@@ -72,6 +44,28 @@ def CSV2DF(input_FileDir,input_FilePath,TSE_data_path):
     except:
         print("入力したファイルにデータはありませんでした。")
 
+
+def basicConfig():
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [%(levelname)s] %(message)s",
+    )
+
+def init_DF2DB(parents_dir,df):
+    print("init_DF2DB開始")
+    out_path = parents_dir/"database"/"user_data"/"user_database.db"
+    print(out_path)
+    conn = sqlite3.connect(out_path)
+    cur = conn.cursor()
+
+    df.to_sql('user_database',conn,if_exists='replace')
+    select_sql = 'SELECT * FROM user_database'
+    print("DF2DB完了")
+    for row in cur.execute(select_sql):
+        print(row)
+    cur.close()
+    conn.close()
+        
 
 if __name__ == "__main__":
     basicConfig()

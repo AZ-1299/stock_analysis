@@ -38,6 +38,8 @@ public class Portfolio extends JPanel {
             }
         });
 
+        
+
         JPanel InputFile_Panel = new JPanel();
         InputFile_Panel.add(file_choice, BorderLayout.WEST);
         InputFile_Panel.add(file_choice_button, BorderLayout.SOUTH);
