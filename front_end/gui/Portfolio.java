@@ -35,6 +35,10 @@ public class Portfolio extends JPanel {
                 // 他のフォルダのメソッド実行
                 ctrl.java2python(null);
                 System.out.println("Controller.javaにアクセス");
+                
+            }
+            public void Dysp_DB(ActionEvent n){
+                
             }
         });
 

@@ -4,6 +4,10 @@ import java.awt.Component;
 import java.io.*;
 import java.nio.file.*;
 import javax.swing.JFileChooser;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
@@ -76,5 +80,24 @@ public class Controller {
             System.out.println("Pythonは正常に動作しました");
         }
 
+    }
+    public void Dysp_DB(){
+        String selfPath = new File("controller.java").getAbsolutePath();
+        Path desp_Path = Paths.get(
+            selfPath,
+            "..",
+            "..",
+            "back_end",
+            "database",
+            "user_data",
+            "user_database"
+        );
+        System.out.println(desp_Path);
+        JTable portfolio_table = new JTable(desp_Path);
+        // JScrollPane sp = new JScrollPane(table);
+        // sp.setPreferredSize(new Dimension(250, 70));
+
+        // JPanel p = new JPanel();
+        // p.add(sp);
     }
 }
