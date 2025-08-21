@@ -3,7 +3,6 @@ import sqlite3
 import csv
 import logging
 import pandas as pd
-
 def CSV2DF(input_FileDir,input_FilePath,TSE_data_path):
     logging.info("CSV2DF読み込み完了")
     try:
@@ -77,7 +76,7 @@ if __name__ == "__main__":
     input_FileDir = parents_dir /"input_data"
     CSV2DF(input_FileDir,"user_portfolio_special.csv",TSE_data_path)
     CSV2DF(input_FileDir,"user_portfolio_accumulate.csv",TSE_data_path)
-    # CSV2DF(input_FileDir,"user_portfolio_spot.csv",TSE_data_path)
+    CSV2DF(input_FileDir,"user_portfolio_spot.csv",TSE_data_path)
 
     
 
