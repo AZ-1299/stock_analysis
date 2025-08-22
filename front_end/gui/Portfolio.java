@@ -31,19 +31,12 @@ public class Portfolio extends JPanel {
 
         Controller ctrl = new Controller();
         file_choice_button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // 他のフォルダのメソッド実行
-                ctrl.java2python(null);
+            public void actionPerformed(ActionEvent e) {ctrl.java2python(null);
                 System.out.println("Controller.javaにアクセス");
-                
+                ctrl.desp_portfolio();
             }
-            public void desp_portfolio(ActionEvent n){
-                
-            }
+            
         });
-
-        
-
         JPanel InputFile_Panel = new JPanel();
         InputFile_Panel.add(file_choice, BorderLayout.WEST);
         InputFile_Panel.add(file_choice_button, BorderLayout.SOUTH);
@@ -56,5 +49,6 @@ public class Portfolio extends JPanel {
         // this.add(InputFile__Panel,gbc);
 
     }
+
 
 }

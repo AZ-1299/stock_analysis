@@ -70,8 +70,10 @@ public class Controller {
         try {
             Process process = go2py.start();
             int exitCode = process.waitFor();
+            desp_portfolio();
             if (exitCode == 0) {
                 System.out.println("Python script executed successfully.");
+                // desp_portfolio();
             } else {
                 System.out.println("Python script failed with exit code: " + exitCode);
             }
@@ -81,10 +83,12 @@ public class Controller {
         } catch (InterruptedException e) {
             e.printStackTrace();
             System.out.println("Pythonは正常に動作しました");
+            desp_portfolio();
         }
 
     }
     public void desp_portfolio(){
+        System.out.println("desp_portfolio 実行");
         String selfPath = new File("controller.java").getAbsolutePath();
         Path desp_Path = Paths.get(
             selfPath,

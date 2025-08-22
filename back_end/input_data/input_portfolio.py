@@ -98,4 +98,4 @@ extract_section(df_all, "特定預り","成長投資枠","つみたて投資枠"
 
 logging.info("株式データの抽出完了")
 print("input_portfolio 終了")
-control()
+control.main()

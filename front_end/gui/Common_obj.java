@@ -108,7 +108,7 @@ public class Common_obj {
     public static void switchPanel(JPanel newPanel) {
         centerPanel.removeAll();
 
-        // デバック用
+        // デバック
         // newPanel.setBackground(Color.PINK);
         centerPanel.add(newPanel, BorderLayout.CENTER);
         centerPanel.revalidate();

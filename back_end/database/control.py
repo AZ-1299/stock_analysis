@@ -3,7 +3,7 @@ import sqlite3
 import csv
 import logging
 import pandas as pd
-def CSV2DF(input_FileDir,input_FilePath,TSE_data_path):
+def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
     logging.info("CSV2DF読み込み完了")
     try:
         input_FileAbspath = input_FileDir/input_FilePath
@@ -65,14 +65,15 @@ def init_DF2DB(parents_dir,df):
     cur.close()
     conn.close()
         
+def main():
+    basicConfig()
+    self_path = Path(__file__)
+    parents_dir = self_path.resolve().parents[1]
+    print(f"inpout is   {parents_dir}")
+    TSE_data_path = self_path/".."/"static"/"TSE_data.csv"
 
-basicConfig()
-self_path = Path(__file__)
-parents_dir = self_path.resolve().parents[1]
-print(f"inpout is   {parents_dir}")
-TSE_data_path = self_path/".."/"static"/"TSE_data.csv"
-
-input_FileDir = parents_dir /"input_data"
-CSV2DF(input_FileDir,"user_portfolio_special.csv",TSE_data_path)
-CSV2DF(input_FileDir,"user_portfolio_accumulate.csv",TSE_data_path)
-CSV2DF(input_FileDir,"user_portfolio_spot.csv",TSE_data_path)
+    input_FileDir = parents_dir /"input_data"
+    CSV2DF(input_FileDir,"user_portfolio_special.csv",TSE_data_path,parents_dir)
+    CSV2DF(input_FileDir,"user_portfolio_accumulate.csv",TSE_data_path,parents_dir)
+    CSV2DF(input_FileDir,"user_portfolio_spot.csv",TSE_data_path,parents_dir)
+    
