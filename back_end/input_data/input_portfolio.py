@@ -3,6 +3,10 @@ import pandas as pd
 import logging
 import unicodedata
 import csv
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from database import control
+
 
 logging.basicConfig(level=logging.INFO)
 print("input_portfolio 開始")
@@ -87,11 +91,11 @@ def extract_section(df, keyword, end_owed_1, end_owed_2, output_filename):
     output_path = os.path.join(self_path, output_filename)
     df_data.to_csv(output_path, index=False, encoding="utf-8-sig")
     logging.info(f"{keyword} 出力：{output_path}")
-
-
+# if __name__ == "__main__":
 extract_section(df_all, "成長投資枠","つみたて投資枠","特定預り","user_portfolio_special.csv")
 extract_section(df_all, "つみたて投資枠","特定預り","成長投資枠","user_portfolio_accumulate.csv")
 extract_section(df_all, "特定預り","成長投資枠","つみたて投資枠","user_portfolio_spot.csv")
 
 logging.info("株式データの抽出完了")
 print("input_portfolio 終了")
+control()

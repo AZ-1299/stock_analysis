@@ -11,6 +11,12 @@ import javax.swing.JTable;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+
 public class Controller {
 
     private static final Logger logger = Logger.getLogger(Controller.class.getName());
@@ -62,11 +68,8 @@ public class Controller {
         go2py.redirectError(ProcessBuilder.Redirect.INHERIT);
         System.out.println("INFO:実行フォイル" + pythonScriptPath);
         try {
-            // pythonスクリプトを実行する
             Process process = go2py.start();
-            // 実行完了までJava側のコードを待機させ、終了コードを出す
             int exitCode = process.waitFor();
-            // 正常終了したか、終了コードで判定
             if (exitCode == 0) {
                 System.out.println("Python script executed successfully.");
             } else {
@@ -81,23 +84,20 @@ public class Controller {
         }
 
     }
-    public void Dysp_DB(){
+    public void desp_portfolio(){
         String selfPath = new File("controller.java").getAbsolutePath();
         Path desp_Path = Paths.get(
             selfPath,
             "..",
-            "..",
-            "back_end",
-            "database",
-            "user_data",
-            "user_database"
+            "back_end"
         );
         System.out.println(desp_Path);
-        JTable portfolio_table = new JTable(desp_Path);
-        // JScrollPane sp = new JScrollPane(table);
-        // sp.setPreferredSize(new Dimension(250, 70));
-
-        // JPanel p = new JPanel();
-        // p.add(sp);
+        try{
+        Connection conn = DriverManager.getConnection("jdbc:sqlite:"+desp_Path);
+        System.out.println("DB接続成功");
+        
+        }catch(Exception e){
+            System.out.println("DB接続エラー:" + e);
+        }
     }
 }

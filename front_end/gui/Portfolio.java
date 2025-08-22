@@ -37,7 +37,7 @@ public class Portfolio extends JPanel {
                 System.out.println("Controller.javaにアクセス");
                 
             }
-            public void Dysp_DB(ActionEvent n){
+            public void desp_portfolio(ActionEvent n){
                 
             }
         });
