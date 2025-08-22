@@ -70,10 +70,10 @@ public class Controller {
         try {
             Process process = go2py.start();
             int exitCode = process.waitFor();
-            desp_portfolio();
+            // desp_portfolio();
             if (exitCode == 0) {
                 System.out.println("Python script executed successfully.");
-                // desp_portfolio();
+                desp_portfolio();
             } else {
                 System.out.println("Python script failed with exit code: " + exitCode);
             }
