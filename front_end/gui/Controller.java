@@ -33,12 +33,15 @@ public class Controller {
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedFile = filechooser.getSelectedFile();
             try {
-                // アプリの実行ディレクトリを取得
-                Path input_path = Paths.get(selfPath, "..", "back_end", "input_data");
+                Path input_path = Paths.get(
+                    selfPath,
+                 "..",
+                    "back_end",
+                    "input_data");
                 logger.info("INFO: input_path is:" + input_path);
                 File inputDir = input_path.toFile();
                 if (!inputDir.exists()) {
-                    inputDir.mkdirs(); // フォルダがなければ作成
+                    inputDir.mkdirs();
                 }
 
                 File copiedFile = new File(inputDir, "New_file.csv");
@@ -63,7 +66,7 @@ public class Controller {
         // File go2py_path = currentDir_next.toFile();
         String pythonScriptPath = scriptPath.toAbsolutePath().toString();
         ProcessBuilder go2py = new ProcessBuilder("python", "-u", pythonScriptPath);
-        // Pythonコードの標準出力をJavaの標準出力に出す
+       
         go2py.redirectOutput(ProcessBuilder.Redirect.INHERIT);
         go2py.redirectError(ProcessBuilder.Redirect.INHERIT);
         System.out.println("INFO:実行フォイル" + pythonScriptPath);
@@ -79,29 +82,41 @@ public class Controller {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            System.out.println("Python実行時に異常が発生しました");
+            System.out.println("Pythonが正常に動作しませんでした");
         } catch (InterruptedException e) {
             e.printStackTrace();
             System.out.println("Pythonは正常に動作しました");
             desp_portfolio();
         }
-
     }
+    
     public void desp_portfolio(){
         System.out.println("desp_portfolio 実行");
-        String selfPath = new File("controller.java").getAbsolutePath();
-        Path desp_Path = Paths.get(
-            selfPath,
+        Path parentPath = Paths.get("").toAbsolutePath();
+        Path dbPath = parentPath.resolve(Paths.get(
             "..",
-            "back_end"
-        );
-        System.out.println(desp_Path);
+            "back_end",
+            "database",
+            "user_data",
+            "user_database.db")).normalize();
+        String url = "jdbc:sqlite:" + dbPath.toAbsolutePath().toString();
+        Connection conn = null;
         try{
-        Connection conn = DriverManager.getConnection("jdbc:sqlite:"+desp_Path);
-        System.out.println("DB接続成功");
-        
+            Class.forName("org.sqlite.JDBC");
+            conn = DriverManager.getConnection(url);
+            System.out.println("DB接続成功");
         }catch(Exception e){
-            System.out.println("DB接続エラー:" + e);
+            System.out.println("DB接続エラー(1):" + e.getMessage());
+        }finally{
+            try{
+                if (conn != null){
+                conn.close();
+                System.out.println("DB切断成功");
+                
+                }
+            }catch (SQLException e){
+                System.out.println("接続エラー(2)：" + e.getMessage());
+            }
         }
     }
 }
