@@ -92,30 +92,29 @@ public class Controller {
     
     public void desp_portfolio(){
         System.out.println("desp_portfolio 実行");
-        Path parentPath = Paths.get("").toAbsolutePath();
-        Path dbPath = parentPath.resolve(Paths.get(
-            "..",
-            "back_end",
+        Path currentPath = Paths.get("").toAbsolutePath();
+        Path dbPath = currentPath.resolve(Paths.get(
+        "back_end",
             "database",
             "user_data",
             "user_database.db")).normalize();
-        String url = "jdbc:sqlite:" + dbPath.toAbsolutePath().toString();
+        String url = "jdbc:sqlite:" + dbPath.toString();
+
         Connection conn = null;
-        try{
+        try {
             Class.forName("org.sqlite.JDBC");
             conn = DriverManager.getConnection(url);
-            System.out.println("DB接続成功");
-        }catch(Exception e){
-            System.out.println("DB接続エラー(1):" + e.getMessage());
-        }finally{
-            try{
-                if (conn != null){
-                conn.close();
-                System.out.println("DB切断成功");
-                
+            System.out.println("DB接続成功: " + dbPath);
+        } catch (Exception e) {
+            System.out.println("DB接続エラー(1): " + e.getMessage());
+        } finally {
+            try {
+                if (conn != null) {
+                    conn.close();
+                    System.out.println("DB切断成功");
                 }
-            }catch (SQLException e){
-                System.out.println("接続エラー(2)：" + e.getMessage());
+            } catch (SQLException e) {
+                System.out.println("接続エラー(2): " + e.getMessage());
             }
         }
     }

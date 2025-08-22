@@ -1,4 +1,7 @@
 package front_end.gui;
+
+import javax.swing.SwingUtilities;
+
 public class Main {
     public static void main(String[] args) {
         try {
@@ -10,6 +13,8 @@ public class Main {
             return;
         }
 
-        new Common_obj();
+        SwingUtilities.invokeLater(() -> {
+            Common_obj.main(null);
+        });
     }
 }
