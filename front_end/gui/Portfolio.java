@@ -1,4 +1,4 @@
-package stock_analysis.front_end.gui;
+package front_end.gui;
 
 import java.awt.Dimension;
 import java.awt.event.*;

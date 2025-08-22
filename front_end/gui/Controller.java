@@ -1,12 +1,12 @@
-package stock_analysis.front_end.gui;
+package front_end.gui;
 
 import java.awt.Component;
 import java.io.*;
 import java.nio.file.*;
 import javax.swing.JFileChooser;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
+// import javax.swing.JPanel;
+// import javax.swing.JScrollPane;
+// import javax.swing.JTable;
 
 import java.util.logging.Logger;
 import java.util.logging.Level;
@@ -14,7 +14,7 @@ import java.util.logging.Level;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.Statement;
+// import java.sql.Statement;
 
 
 public class Controller {
