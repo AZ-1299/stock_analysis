@@ -23,6 +23,7 @@ public class Controller {
         logger.setLevel(Level.FINE);
     }
 
+    // ユーザのポートフォリオ情報が記載されているSCVをコピー
     public void java2python(Component parent) {
         System.out.println("Coll out Java2Python");
         String selfPath = new File("controller.java").getAbsolutePath();
@@ -49,12 +50,13 @@ public class Controller {
                         copiedFile.toPath(),
                         StandardCopyOption.REPLACE_EXISTING);
 
-                System.out.println("ファイルをコピーしました: " + copiedFile.getAbsolutePath());
+                System.out.println("ファイルをコピー成功: " + copiedFile.getAbsolutePath());
             } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println("ファイルコピーに失敗しました");
+                System.out.println("ファイルコピー失敗");
             }
         }
+        // JavaからPythonを実行：input_portfolio.py
         Path scriptPath = Paths.get(
                 selfPath,
                 "..",
@@ -89,6 +91,7 @@ public class Controller {
         }
     }
 
+    // DBを画面に表示
     public void desp_portfolio() {
         System.out.println("desp_portfolio 実行");
         Path selfPath = Paths.get("").toAbsolutePath();
@@ -101,6 +104,7 @@ public class Controller {
                 "user_database.db")).normalize();
         String url = "jdbc:sqlite:" + dbPath.toString();
 
+        // DB接続
         String string_dbpath = dbPath.toString();
         System.out.println("dbPath is : " + string_dbpath);
         Connection conn = null;
@@ -112,6 +116,7 @@ public class Controller {
             System.out.println("DB接続エラー(1): " + e.getMessage());
         } finally {
             try {
+
                 if (conn != null) {
                     conn.close();
                     System.out.println("DB切断");
