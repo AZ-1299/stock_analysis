@@ -114,7 +114,7 @@ public class Controller {
             try {
                 if (conn != null) {
                     conn.close();
-                    System.out.println("DB切断成功");
+                    System.out.println("DB切断");
                 }
             } catch (SQLException e) {
                 System.out.println("接続エラー(2): " + e.getMessage());
