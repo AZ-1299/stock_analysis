@@ -35,7 +35,7 @@ def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
         # print(merged_df)
 
         merged_df = pd.merge(df_main, merged_df, on="コード", how="left")
-        merged_df = merged_df.drop(columns=["買付日","前日比", "前日比（％）"])
+        merged_df = merged_df.drop(columns=["買付日","前日比", "前日比（％）","損益","損益（％）","評価額"])
         # df_columns = df_main.columns
         # print(df_columns)
         print(merged_df)
@@ -74,6 +74,6 @@ def main():
 
     input_FileDir = parents_dir /"input_data"
     CSV2DF(input_FileDir,"user_portfolio_special.csv",TSE_data_path,parents_dir)
-    CSV2DF(input_FileDir,"user_portfolio_accumulate.csv",TSE_data_path,parents_dir)
-    CSV2DF(input_FileDir,"user_portfolio_spot.csv",TSE_data_path,parents_dir)
+    # CSV2DF(input_FileDir,"user_portfolio_accumulate.csv",TSE_data_path,parents_dir)
+    # CSV2DF(input_FileDir,"user_portfolio_spot.csv",TSE_data_path,parents_dir)
     

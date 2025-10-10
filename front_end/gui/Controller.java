@@ -9,10 +9,14 @@ import java.nio.file.*;
 import javax.swing.JFileChooser;
 
 import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 // import java.sql.Statement;
 
@@ -107,23 +111,49 @@ public class Controller {
         // DB接続
         String string_dbpath = dbPath.toString();
         System.out.println("dbPath is : " + string_dbpath);
-        Connection conn = null;
-        try {
-            Class.forName("org.sqlite.JDBC");
-            conn = DriverManager.getConnection(url);
-            System.out.println("DB接続成功: " + dbPath);
-        } catch (Exception e) {
-            System.out.println("DB接続エラー(1): " + e.getMessage());
-        } finally {
-            try {
+        // Connection conn = null;
+        String sql = "SELECT コード, 銘柄名, 数量, 取得単価, \"33業種区分\" AS 業種,口座 FROM user_database";
 
-                if (conn != null) {
-                    conn.close();
-                    System.out.println("DB切断");
-                }
-            } catch (SQLException e) {
-                System.out.println("接続エラー(2): " + e.getMessage());
+        List<String> code = new ArrayList<>();
+        List<String> name = new ArrayList<>();
+        List<Integer> qty = new ArrayList<>();
+        List<Double> unit = new ArrayList<>();
+        List<String> industry = new ArrayList<>();
+        List<String> account = new ArrayList<>();
+
+        try (Connection conn = DriverManager.getConnection(url);
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
+
+            System.out.println("DB接続成功: " + dbPath);
+
+            while (rs.next()) {
+                code.add(rs.getString("コード"));
+                name.add(rs.getString("銘柄名"));
+                qty.add(rs.getInt("数量"));
+                unit.add(rs.getDouble("取得単価"));
+                industry.add(rs.getString("業種"));
+                account.add(rs.getString("口座"));
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return;
         }
+
+        String[] codeArr = code.toArray(new String[0]);
+        String[] nameArr = name.toArray(new String[0]);
+        int[] qtyArr = qty.stream().mapToInt(Integer::intValue).toArray();
+        double[] unitArr = unit.stream().mapToDouble(Double::doubleValue).toArray();
+        String[] indArr = industry.toArray(new String[0]);
+        String[] acctArr = account.toArray(new String[0]);
+
+        System.out.printf("配列の長さは%dです%n", codeArr.length);
+        System.out.printf("|コード|銘柄名  |数 量| 取得単価 |業     種|口座区分|\n");
+        for (int i = 0; i < codeArr.length; i++) {
+            System.out.printf("| %s | %4s | %2d | %.2f | %5s | %s |%n",
+                    codeArr[i], nameArr[i], qtyArr[i], unitArr[i], indArr[i], acctArr[i]);
+        }
+        System.out.printf("DB切断\n");
+
     }
 }

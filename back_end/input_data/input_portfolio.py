@@ -10,7 +10,7 @@ from database import control
 
 logging.basicConfig(level=logging.INFO)
 print("input_portfolio 開始")
-#全角⇔半角などの揺れを吸収
+#全角/半角などの揺れを吸収
 def normalize(text):
     return unicodedata.normalize("NFKC", str(text))
 
@@ -30,7 +30,7 @@ with open(csv_path, "r", encoding="cp932") as f:
     reader = csv.reader(f)
     lines = [row for row in reader if row]
 
-#  raw 行を DataFrame にしてロギング用に保持
+#  raw 行をDFにしてログ用に保持
 raw_lines = [" ".join(row) for row in lines]
 df_all = pd.DataFrame({"raw": raw_lines})
 df_all["raw"] = df_all["raw"].map(normalize)
@@ -91,6 +91,8 @@ def extract_section(df, keyword, end_owed_1, end_owed_2, output_filename):
     output_path = os.path.join(self_path, output_filename)
     df_data.to_csv(output_path, index=False, encoding="utf-8-sig")
     logging.info(f"{keyword} 出力：{output_path}")
+
+    
 # if __name__ == "__main__":
 extract_section(df_all, "成長投資枠","つみたて投資枠","特定預り","user_portfolio_special.csv")
 extract_section(df_all, "つみたて投資枠","特定預り","成長投資枠","user_portfolio_accumulate.csv")
