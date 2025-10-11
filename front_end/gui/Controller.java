@@ -81,7 +81,7 @@ public class Controller {
             // desp_portfolio();
             if (exitCode == 0) {
                 System.out.println("Python script executed successfully.");
-                desp_portfolio();
+                input_DB();
             } else {
                 System.out.println("Python script failed with exit code: " + exitCode);
             }
@@ -91,13 +91,13 @@ public class Controller {
         } catch (InterruptedException e) {
             e.printStackTrace();
             System.out.println("Pythonは正常に動作しました");
-            desp_portfolio();
+            input_DB();
         }
     }
 
     // DBを画面に表示
-    public void desp_portfolio() {
-        System.out.println("desp_portfolio 実行");
+    public void input_DB() {
+        System.out.println("input_DB 実行");
         Path selfPath = Paths.get("").toAbsolutePath();
         String string_seflPath = selfPath.toString();
         System.out.println("string_seflPath is : " + string_seflPath);
@@ -108,52 +108,38 @@ public class Controller {
                 "user_database.db")).normalize();
         String url = "jdbc:sqlite:" + dbPath.toString();
 
-        // DB接続
+        // DB接続とDB情報の受け渡し
         String string_dbpath = dbPath.toString();
         System.out.println("dbPath is : " + string_dbpath);
-        // Connection conn = null;
-        String sql = "SELECT コード, 銘柄名, 数量, 取得単価, \"33業種区分\" AS 業種,口座 FROM user_database";
+        public record PortfolioRow(
+            String code,
+            String name,
+            int qty,
+            double unitPrice,
+            String industry,
+            String account
+        ){}
+        List<PortfolioRow> loadPortfolio() throws SQLException{
+            String sql = "SELECT コード, 銘柄名, 数量, 取得単価, \"33業種区分\" AS 業種,口座 FROM user_database";
+            List<PortfolioRow> list = new ArrayList<>();
 
-        List<String> code = new ArrayList<>();
-        List<String> name = new ArrayList<>();
-        List<Integer> qty = new ArrayList<>();
-        List<Double> unit = new ArrayList<>();
-        List<String> industry = new ArrayList<>();
-        List<String> account = new ArrayList<>();
+            try (Connection conn = DriverManager.getConnection(url);
+                    PreparedStatement ps = conn.prepareStatement(sql);
+                    ResultSet rs = ps.executeQuery()) {
+                System.out.println("DB接続成功: " + dbPath);
+                while (rs.next()) {
+                    PortfolioRow row = new PortfolioRow(
+                            rs.getString("コード"),
+                            rs.getString("銘柄名"),
+                            rs.getInt("数量"),
+                            rs.getDouble("取得単価"),
+                            rs.getString("業種"),
+                            rs.getString("口座"));
+                    list.add(row);
+                }
 
-        try (Connection conn = DriverManager.getConnection(url);
-                PreparedStatement ps = conn.prepareStatement(sql);
-                ResultSet rs = ps.executeQuery()) {
-
-            System.out.println("DB接続成功: " + dbPath);
-
-            while (rs.next()) {
-                code.add(rs.getString("コード"));
-                name.add(rs.getString("銘柄名"));
-                qty.add(rs.getInt("数量"));
-                unit.add(rs.getDouble("取得単価"));
-                industry.add(rs.getString("業種"));
-                account.add(rs.getString("口座"));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return;
+            System.out.printf("DB切断\n");
+            }
         }
-
-        String[] codeArr = code.toArray(new String[0]);
-        String[] nameArr = name.toArray(new String[0]);
-        int[] qtyArr = qty.stream().mapToInt(Integer::intValue).toArray();
-        double[] unitArr = unit.stream().mapToDouble(Double::doubleValue).toArray();
-        String[] indArr = industry.toArray(new String[0]);
-        String[] acctArr = account.toArray(new String[0]);
-
-        System.out.printf("配列の長さは%dです%n", codeArr.length);
-        System.out.printf("|コード|銘柄名  |数 量| 取得単価 |業     種|口座区分|\n");
-        for (int i = 0; i < codeArr.length; i++) {
-            System.out.printf("| %s | %4s | %2d | %.2f | %5s | %s |%n",
-                    codeArr[i], nameArr[i], qtyArr[i], unitArr[i], indArr[i], acctArr[i]);
-        }
-        System.out.printf("DB切断\n");
-
-    }
 }

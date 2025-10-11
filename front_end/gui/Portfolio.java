@@ -2,6 +2,8 @@ package front_end.gui;
 
 import java.awt.Dimension;
 import java.awt.event.*;
+import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -31,11 +33,12 @@ public class Portfolio extends JPanel {
 
         Controller ctrl = new Controller();
         file_choice_button.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {ctrl.java2python(null);
+            public void actionPerformed(ActionEvent e) {
+                ctrl.java2python(null);
                 System.out.println("Controller.javaにアクセス");
                 // ctrl.desp_portfolio();
             }
-            
+
         });
         JPanel InputFile_Panel = new JPanel();
         InputFile_Panel.add(file_choice, BorderLayout.WEST);
@@ -48,7 +51,8 @@ public class Portfolio extends JPanel {
         // gbc.gridy = 0;
         // this.add(InputFile__Panel,gbc);
 
-    }
+        // DB表示
 
+    }
 
 }
