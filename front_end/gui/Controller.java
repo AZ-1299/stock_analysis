@@ -111,50 +111,42 @@ public class Controller {
         // DB接続
         String string_dbpath = dbPath.toString();
         System.out.println("dbPath is : " + string_dbpath);
-        // Connection conn = null;
         String sql = "SELECT コード, 銘柄名, 数量, 取得単価, \"33業種区分\" AS 業種,口座 FROM user_database";
-        
-
-        List<String> code = new ArrayList<>();
-        List<String> name = new ArrayList<>();
-        List<Integer> qty = new ArrayList<>();
-        List<Double> unit = new ArrayList<>();
-        List<String> industry = new ArrayList<>();
-        List<String> account = new ArrayList<>();
 
         try (Connection conn = DriverManager.getConnection(url);
                 PreparedStatement ps = conn.prepareStatement(sql);
                 ResultSet rs = ps.executeQuery()) {
-
             System.out.println("DB接続成功: " + dbPath);
 
             while (rs.next()) {
-                code.add(rs.getString("コード"));
-                name.add(rs.getString("銘柄名"));
-                qty.add(rs.getInt("数量"));
-                unit.add(rs.getDouble("取得単価"));
-                industry.add(rs.getString("業種"));
-                account.add(rs.getString("口座"));
+                rows.add(new PortfolioRow(
+                        rs.getString(1),
+                        rs.getDouble(2),
+                        rs.getInt(3),
+                        rs.getDouble(4),
+                        rs.getString(5),
+                        rs.get.String(6)));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("DB取得失敗");
             return;
         }
+        var model = new javax.swing.table.DefaultTableModel(
+                new Object[] { "コード", "銘柄名", "数量", "取得単価", "業種", "口座"
+                }, 0);
+        for (var r : rows)model.addRow(r.toArray());
+        var table = new javax.swing.JTable(model);
 
-        String[] codeArr = code.toArray(new String[0]);
-        String[] nameArr = name.toArray(new String[0]);
-        int[] qtyArr = qty.stream().mapToInt(Integer::intValue).toArray();
-        double[] unitArr = unit.stream().mapToDouble(Double::doubleValue).toArray();
-        String[] indArr = industry.toArray(new String[0]);
-        String[] acctArr = account.toArray(new String[0]);
+        // for(model:rows){
+        // System.out.println(rows);
+        // }
 
-        System.out.printf("レコード数は%dです%n", codeArr.length);
-        System.out.printf("|コード|銘柄名  |数 量| 取得単価 |業     種|口座区分|\n");
-        for (int i = 0; i < codeArr.length; i++) {
-            System.out.printf("| %s | %4s | %2d | %.2f | %5s | %s |%n",
-                    codeArr[i], nameArr[i], qtyArr[i], unitArr[i], indArr[i], acctArr[i]);
-        }
         System.out.printf("DB切断\n");
 
     }
-}
+
+    public record PortfolioROw(String code, String name, Interger qty, Double unit, String industry, String account) {
+        Object[] toArray() {return new Object[]{code,name,qty,unit,industry,account}
+    };
+};
+
