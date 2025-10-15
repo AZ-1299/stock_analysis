@@ -129,22 +129,13 @@ public class Controller {
                         rs.getString(6)));
             }
             System.out.println(rows);
+            
         } catch (SQLException e) {
             System.err.println("DB取得失敗");
             return;
         }
-        // var model = new javax.swing.table.DefaultTableModel(
-        //         new Object[] { "コード", "銘柄名", "数量", "取得単価", "業種", "口座"
-        //         }, 0);
-        // for (var r : rows)model.addRow(r.toArray());
-        // var table = new javax.swing.JTable(model);
-
-        // for(model:rows){
-        // System.out.println(rows);
-        // }
-
+        //自動で切断される
         System.out.printf("DB切断\n");
-
     }
     public record PortfolioRow(String code, String name, Integer qty, Double unit, String industry, String account) {
         Object[] toArray() {return new Object[]{code,name,qty,unit,industry,account};
