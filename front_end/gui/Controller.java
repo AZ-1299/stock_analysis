@@ -118,24 +118,26 @@ public class Controller {
                 ResultSet rs = ps.executeQuery()) {
             System.out.println("DB接続成功: " + dbPath);
 
+            List<PortfolioRow> rows = new ArrayList<>(); 
             while (rs.next()) {
                 rows.add(new PortfolioRow(
                         rs.getString(1),
-                        rs.getDouble(2),
+                        rs.getString(2),
                         rs.getInt(3),
                         rs.getDouble(4),
                         rs.getString(5),
-                        rs.get.String(6)));
+                        rs.getString(6)));
             }
+            System.out.println(rows);
         } catch (SQLException e) {
             System.err.println("DB取得失敗");
             return;
         }
-        var model = new javax.swing.table.DefaultTableModel(
-                new Object[] { "コード", "銘柄名", "数量", "取得単価", "業種", "口座"
-                }, 0);
-        for (var r : rows)model.addRow(r.toArray());
-        var table = new javax.swing.JTable(model);
+        // var model = new javax.swing.table.DefaultTableModel(
+        //         new Object[] { "コード", "銘柄名", "数量", "取得単価", "業種", "口座"
+        //         }, 0);
+        // for (var r : rows)model.addRow(r.toArray());
+        // var table = new javax.swing.JTable(model);
 
         // for(model:rows){
         // System.out.println(rows);
@@ -144,9 +146,9 @@ public class Controller {
         System.out.printf("DB切断\n");
 
     }
+    public record PortfolioRow(String code, String name, Integer qty, Double unit, String industry, String account) {
+        Object[] toArray() {return new Object[]{code,name,qty,unit,industry,account};
+        }
+    }
 
-    public record PortfolioROw(String code, String name, Interger qty, Double unit, String industry, String account) {
-        Object[] toArray() {return new Object[]{code,name,qty,unit,industry,account}
-    };
-};
-
+}
