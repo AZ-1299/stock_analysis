@@ -1,8 +1,8 @@
 from pathlib import Path
 import sqlite3
-import csv
 import logging
 import pandas as pd
+
 def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
     logging.info("CSV2DF読み込み完了")
     try:
@@ -18,10 +18,10 @@ def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
         # TSEデータの下処理
         in_col_TSE = ["コード","33業種区分",]
         TSE_df = pd.read_csv(TSE_data_path, encoding="cp932", dtype={"コード": str})
-        # print(TSE_df)
         logging.info("TSEデータ読み込み完了")
         new_TSE_df = TSE_df.loc[:,in_col_TSE]
         # print(new_TSE_df+"\n")
+
         # ユーザポートフォリオcsv
         in_col = ["コード"]
         df_main = pd.read_csv(input_FileAbspath, encoding="utf-8", dtype={"コード": str})
