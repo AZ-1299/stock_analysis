@@ -44,18 +44,18 @@ public class Connect_DB {
                         rs.getInt(3),
                         rs.getDouble(4),
                         rs.getString(5),
-                        rs.getString(6))
-                        );
+                        rs.getString(6)));
             }
             System.out.println(rows);
+            //自動で切断される
+            System.out.printf("DB切断\n");
             Make_Table.Portfolio_Table(rows);
+            
         } catch (SQLException e) {
             System.err.println("DB取得失敗");
             return;
         }
-        //自動で切断される
-        System.out.printf("DB切断\n");
-        
+
     }
     public record PortfolioRow(String code, String name, Integer qty, Double unit, String industry, String account) {
         Object[] toArray() {return new Object[]{code,name,qty,unit,industry,account};
