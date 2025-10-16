@@ -7,12 +7,17 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Label;
 
 //ファイル参照
 import front_end.control.Main_Controller;
+import front_end.control.Make_Table;;
 
 public class Portfolio extends JPanel {
     public Portfolio() {
@@ -36,20 +41,17 @@ public class Portfolio extends JPanel {
                 System.out.println("Controller.javaにアクセス");
                 // ctrl.desp_portfolio();
             }
-
         });
+
         JPanel InputFile_Panel = new JPanel();
         InputFile_Panel.add(file_choice, BorderLayout.WEST);
         InputFile_Panel.add(file_choice_button, BorderLayout.SOUTH);
 
         this.add(InputFile_Panel, BorderLayout.NORTH);
 
-        // GridBagConstraints gbc = new GridBagConstraints();
-        // gbc.gridx = 0;
-        // gbc.gridy = 0;
-        // this.add(InputFile__Panel,gbc);
-
-        // DB表示
+        JTable portfolioTable = Make_Table.createPortfolioTable();
+        JScrollPane sp = new JScrollPane(portfolioTable);
+        this.add(sp);
 
     }
 

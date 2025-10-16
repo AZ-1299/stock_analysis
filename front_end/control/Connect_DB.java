@@ -11,10 +11,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import front_end.control.Connect_DB.PortfolioRow;
+
 //DB接続→変数に代入
 public class Connect_DB {
-    public static void input_db() {
-
+public static List<PortfolioRow> input_db() {
         System.out.println("input_DB 実行");
         Path selfPath = Paths.get("").toAbsolutePath();
         String string_seflPath = selfPath.toString();
@@ -49,11 +50,11 @@ public class Connect_DB {
             System.out.println(rows);
             //自動で切断される
             System.out.printf("DB切断\n");
-            Make_Table.Portfolio_Table(rows);
+            return rows;
             
         } catch (SQLException e) {
             System.err.println("DB取得失敗");
-            return;
+            return null;
         }
 
     }

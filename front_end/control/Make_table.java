@@ -5,13 +5,23 @@ import java.awt.Component;
 import java.io.*;
 import java.util.List;
 
+import javax.swing.JTable;
+
 //ファイル参照
 import front_end.control.Connect_DB;
+import front_end.gui.Portfolio;
+import front_end.control.Make_Table;
 
 
 public class Make_Table {
-    public static void Portfolio_Table(List<Connect_DB.PortfolioRow> portfolio_data) {
-        System.out.println("Portfolio_Table起動");
-        System.out.println(portfolio_data);
+    public static JTable createPortfolioTable() {        
+    System.out.println("Portfolio_Table起動");
+        
+        List<Connect_DB.PortfolioRow> rawData = Connect_DB.input_db();
+        PortfolioTableModel tableModel = new PortfolioTableModel(rawData);
+        JTable portfolioTable = new JTable(tableModel);
+
+        System.out.println("JTableを作成");
+        return portfolioTable;
     }
 }
