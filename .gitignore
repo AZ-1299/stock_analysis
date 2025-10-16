@@ -1,6 +1,6 @@
 .venv/
 venv/
 back_end/database/user_data/user_database.db
-
+back_end/Input_data/*
 # back_end/database/user_data/*
 # !back_end/database/user_data/.gitkeep
