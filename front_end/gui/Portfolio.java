@@ -1,5 +1,4 @@
-package front_end.gui;
-
+package gui;
 import java.awt.Dimension;
 import java.awt.event.*;
 import java.util.List;
@@ -7,6 +6,9 @@ import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import front_end.control.Controller;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;

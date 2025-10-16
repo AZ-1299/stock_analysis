@@ -1,5 +1,4 @@
-package front_end.gui;
-
+package front_end.control;
 import javax.swing.*;
 // import java.awt.event.*;
 import java.awt.Dimension;

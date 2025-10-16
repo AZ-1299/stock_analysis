@@ -1,6 +1,7 @@
-package front_end.gui;
-
+package gui;
 import javax.swing.SwingUtilities;
+
+import front_end.control.Common_obj;
 
 public class Main {
     public static void main(String[] args) {

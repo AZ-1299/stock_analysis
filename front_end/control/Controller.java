@@ -1,4 +1,4 @@
-package front_end.gui;
+package front_end.control;
 
 import java.awt.Component;
 import java.io.*;
@@ -7,6 +7,9 @@ import java.io.*;
 // import javax.swing.JTable;
 import java.nio.file.*;
 import javax.swing.JFileChooser;
+
+import front_end.control.Controller.PortfolioRow;
+import gui.Control_table;
 
 import java.util.logging.Logger;
 import java.util.ArrayList;
@@ -81,7 +84,7 @@ public class Controller {
             // desp_portfolio();
             if (exitCode == 0) {
                 System.out.println("Python script executed successfully.");
-                input_DB();
+                input_db();
             } else {
                 System.out.println("Python script failed with exit code: " + exitCode);
             }
@@ -91,12 +94,12 @@ public class Controller {
         } catch (InterruptedException e) {
             e.printStackTrace();
             System.out.println("Pythonは正常に動作しました");
-            input_DB();
+            input_db();
         }
     }
 
     // DBを画面に表示
-    public void input_DB() {
+    public static void input_db() {
         System.out.println("input_DB 実行");
         Path selfPath = Paths.get("").toAbsolutePath();
         String string_seflPath = selfPath.toString();
@@ -136,6 +139,7 @@ public class Controller {
         }
         //自動で切断される
         System.out.printf("DB切断\n");
+        Control_table.Portfolio_Table(rows);
     }
     public record PortfolioRow(String code, String name, Integer qty, Double unit, String industry, String account) {
         Object[] toArray() {return new Object[]{code,name,qty,unit,industry,account};
