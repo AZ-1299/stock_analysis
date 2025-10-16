@@ -1,4 +1,4 @@
-package gui;
+package front_end.gui;
 import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JPanel;

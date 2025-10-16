@@ -1,4 +1,4 @@
-package gui;
+package front_end.gui;
 import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Font;

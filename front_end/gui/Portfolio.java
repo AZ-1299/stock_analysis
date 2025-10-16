@@ -1,29 +1,25 @@
-package gui;
+package front_end.gui;
+
+//ライブラリ参照
 import java.awt.Dimension;
 import java.awt.event.*;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
-import front_end.control.Controller;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+
+//ファイル参照
+import front_end.control.Main_Controller;
 
 public class Portfolio extends JPanel {
     public Portfolio() {
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(300, 400));
 
-        // JLabel ment_label = new JLabel("^ポートフォリオ-メンテナンス中・・・") ;
-        // ment_label.setForeground(Color.BLACK);
-        // ment_label.setHorizontalAlignment(JLabel.CENTER);
-        // ment_label.setFont(new Font("Meiryo",Font.PLAIN,18));
 
-        // this.add(ment_label,BorderLayout.CENTER);
 
         JLabel file_choice = new JLabel("CSVファイル選択");
         file_choice.setForeground(Color.BLACK);
@@ -33,7 +29,7 @@ public class Portfolio extends JPanel {
         file_choice_button.setFont(new Font("Meiryo", Font.PLAIN, 10));
         // file_choice_button.setPreferredSize(new Dimension(100, 20));
 
-        Controller ctrl = new Controller();
+        Main_Controller ctrl = new Main_Controller();
         file_choice_button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ctrl.java2python(null);

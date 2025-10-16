@@ -1,14 +1,15 @@
 package front_end.control;
+
 import javax.swing.*;
-// import java.awt.event.*;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
-public class Common_obj {
-    private static JPanel centerPanel;
+import front_end.gui.*;
 
+public class GuiObj_Control {
+    private static JPanel centerPanel;
     public static void main(String[] args) {
         // ウィンドウ作成
         JFrame base_frame = new JFrame();
@@ -73,14 +74,11 @@ public class Common_obj {
         base_frame.add(centerPanel, BorderLayout.CENTER);
 
         // 諸々base_frameに追加
-        // base_frame.setLayout(new BorderLayout());
         JPanel panel_item = new JPanel();
         panel_item.add(TOP_button);
-        // panel_item.add(seLogin_button);
         panel_item.add(portfolio_button);
         panel_item.add(analysis);
         panel_item.add(config_button);
-        // panel_item.add(label_title,BorderLayout.NORTH);
         JPanel panel_above = new JPanel(new BorderLayout());
 
         panel_above.add(panel_item, BorderLayout.SOUTH);
@@ -90,9 +88,6 @@ public class Common_obj {
         base_frame.add(panel_above, BorderLayout.NORTH);
         base_frame.add(exit, BorderLayout.SOUTH);
         base_frame.add(centerPanel, BorderLayout.CENTER);
-
-        // base_frame.add(panle_title,BorderLayout.NORTH);
-        // base_frame.add(panel_above, BorderLayout.SOUTH);
 
         // base_frame表示
         desp_default();

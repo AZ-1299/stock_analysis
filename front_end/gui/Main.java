@@ -1,7 +1,10 @@
-package gui;
+package front_end.gui;
+
+//ライブラリ参照
 import javax.swing.SwingUtilities;
 
-import front_end.control.Common_obj;
+//ファイル参照
+import front_end.control.GuiObj_Control;
 
 public class Main {
     public static void main(String[] args) {
@@ -15,7 +18,7 @@ public class Main {
         }
 
         SwingUtilities.invokeLater(() -> {
-            Common_obj.main(null);
+            GuiObj_Control.main(null);
         });
     }
 }
