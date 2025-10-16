@@ -74,6 +74,6 @@ def main():
 
     input_FileDir = parents_dir /"input_data"
     CSV2DF(input_FileDir,"user_portfolio_special.csv",TSE_data_path,parents_dir)
-    # CSV2DF(input_FileDir,"user_portfolio_accumulate.csv",TSE_data_path,parents_dir)
-    # CSV2DF(input_FileDir,"user_portfolio_spot.csv",TSE_data_path,parents_dir)
+    CSV2DF(input_FileDir,"user_portfolio_accumulate.csv",TSE_data_path,parents_dir)
+    CSV2DF(input_FileDir,"user_portfolio_spot.csv",TSE_data_path,parents_dir)
     
