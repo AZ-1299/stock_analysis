@@ -2,6 +2,7 @@ from pathlib import Path
 import sqlite3
 import logging
 import pandas as pd
+import os
 
 def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
     logging.info("CSV2DF読み込み完了")
@@ -32,14 +33,13 @@ def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
         merged_df = pd.merge(df_main_code, new_TSE_df, on="コード", how="left")
         merged_df["口座"] = acoount
 
-        # print(merged_df)
-
         merged_df = pd.merge(df_main, merged_df, on="コード", how="left")
         merged_df = merged_df.drop(columns=["買付日","前日比", "前日比（％）","損益","損益（％）","評価額"])
-        # df_columns = df_main.columns
-        # print(df_columns)
         print(merged_df)
         init_DF2DB(parents_dir,merged_df)
+
+        if input_FilePath=='user_portfolio_special.csv':
+            init_dorp_db(parents_dir)
     except:
         print("入力したファイルにデータはありませんでした。")
 
@@ -50,7 +50,12 @@ def basicConfig():
         format="%(asctime)s [%(levelname)s] %(message)s",
     )
 
+def init_dorp_db(parents_dir):
+    out_path = parents_dir/"database"/"user_data"/"user_database.db"
+    os.remove(out_path)
+
 def init_DF2DB(parents_dir,df):
+    
     print("init_DF2DB開始")
     out_path = parents_dir/"database"/"user_data"/"user_database.db"
     print(out_path)
