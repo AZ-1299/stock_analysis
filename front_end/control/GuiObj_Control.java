@@ -1,11 +1,13 @@
 package front_end.control;
 
+//ライブラリ参照
 import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.BorderLayout;
 import java.awt.Color;
 
+//ファイル参照
 import front_end.gui.*;
 
 public class GuiObj_Control {

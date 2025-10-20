@@ -54,7 +54,7 @@ public static List<PortfolioRow> input_db() {
             
         } catch (SQLException e) {
             System.err.println("DB取得失敗");
-            return null;
+            return new ArrayList<>();
         }
 
     }
