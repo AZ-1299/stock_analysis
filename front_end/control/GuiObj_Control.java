@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 
 //ファイル参照
 import front_end.gui.*;
@@ -32,12 +33,6 @@ public class GuiObj_Control {
         label_title.setForeground(Color.BLACK);
         label_title.setPreferredSize(new Dimension(400, 50));
         label_title.setHorizontalAlignment(JLabel.CENTER);
-
-        // ボタン作成
-        // JButton seLogin_button = new JButton("証券口座ログイン");
-        // seLogin_button.setFont(new Font("Meiryo",Font.PLAIN, 14));
-        // seLogin_button.setPreferredSize(new Dimension(160,50));
-        // seLogin_button.setHorizontalAlignment(JButton.CENTER);
 
         JButton TOP_button = new JButton("TOPページ");
         TOP_button.setFont(new Font("Meiryo", Font.PLAIN, 14));
@@ -94,7 +89,6 @@ public class GuiObj_Control {
         // base_frame表示
         desp_default();
         base_frame.setVisible(true);
-
     }
 
     public static void exit_app() {
@@ -105,7 +99,6 @@ public class GuiObj_Control {
         centerPanel.removeAll();
 
         // デバック
-        // newPanel.setBackground(Color.PINK);
         centerPanel.add(newPanel, BorderLayout.CENTER);
         centerPanel.revalidate();
         centerPanel.repaint();
@@ -131,9 +124,10 @@ public class GuiObj_Control {
     public static void desp_config() {
         switchPanel(new Config());
     }
-
-    // public static void Analysis(){
-    // switchPanel();
-    // }
-
+    public static void requestPortfolioTableUpdate() {
+    Component currentView = centerPanel.getComponent(0);
+    if (currentView instanceof Portfolio) {
+        ((Portfolio) currentView).updatePortfolioTable();
+    }
+}
 }

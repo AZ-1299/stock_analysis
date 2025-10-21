@@ -8,23 +8,27 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import java.awt.Component;  
 import javax.swing.JTable;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Label;
 
+
 //ファイル参照
+import front_end.control.Connect_DB;
+import front_end.control.DataUpdate;
 import front_end.control.Main_Controller;
 import front_end.control.Make_Table;;
 
 public class Portfolio extends JPanel {
+    private JTable portfolioTable;
+    private JScrollPane sp;
+    private DataUpdate tableModel;
     public Portfolio() {
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(300, 400));
-
-
 
         JLabel file_choice = new JLabel("CSVファイル選択");
         file_choice.setForeground(Color.BLACK);
@@ -35,24 +39,32 @@ public class Portfolio extends JPanel {
         // file_choice_button.setPreferredSize(new Dimension(100, 20));
 
         Main_Controller ctrl = new Main_Controller();
+        
         file_choice_button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 ctrl.java2python(null);
-                System.out.println("Controller.javaにアクセス");
-                // ctrl.desp_portfolio();
+                System.out.println("Portfolio.javaにアクセス");
             }
         });
 
         JPanel InputFile_Panel = new JPanel();
         InputFile_Panel.add(file_choice, BorderLayout.WEST);
         InputFile_Panel.add(file_choice_button, BorderLayout.SOUTH);
-
         this.add(InputFile_Panel, BorderLayout.NORTH);
-
         JTable portfolioTable = Make_Table.createPortfolioTable();
         JScrollPane sp = new JScrollPane(portfolioTable);
         this.add(sp);
 
     }
 
+    public void updatePortfolioTable() {
+        this.remove(this.sp); 
+        JTable newTable = Make_Table.createPortfolioTable(); 
+        this.sp = new JScrollPane(newTable);
+        this.add(this.sp, BorderLayout.CENTER);
+        this.revalidate(); 
+        this.repaint();    
+        
+        System.out.println("テーブルを新しいデータで再描画しました。");
+    }
 }
