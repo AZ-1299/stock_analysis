@@ -36,10 +36,16 @@ def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
         merged_df = pd.merge(df_main, merged_df, on="コード", how="left")
         merged_df = merged_df.drop(columns=["買付日","前日比", "前日比（％）","損益","損益（％）","評価額"])
         print(merged_df)
-        init_DF2DB(parents_dir,merged_df)
+        
 
         if input_FilePath=='user_portfolio_special.csv':
             init_dorp_db(parents_dir)
+            key = 0
+            init_DF2DB(parents_dir,merged_df,key)
+        else:
+            key = 1
+            init_DF2DB(parents_dir,merged_df,key)
+
     except:
         print("入力したファイルにデータはありませんでした。")
 
@@ -54,21 +60,32 @@ def init_dorp_db(parents_dir):
     out_path = parents_dir/"database"/"user_data"/"user_database.db"
     os.remove(out_path)
 
-def init_DF2DB(parents_dir,df):
+def init_DF2DB(parents_dir,df,key):
     
     print("init_DF2DB開始")
-    out_path = parents_dir/"database"/"user_data"/"user_database.db"
+    out_path = parents_dir/"database"/"user_data"/"user_database.db" 
     print(out_path)
+
     conn = sqlite3.connect(out_path)
     cur = conn.cursor()
+    if key == 0:  
+        df.to_sql('user_database',conn,if_exists='replace')
+        select_sql = 'SELECT * FROM user_database'
+        print("DF2DB完了")
+        for row in cur.execute(select_sql):
+            print(row)
+        cur.close()
+        conn.close()
+    else:
+        df.to_sql('user_database',conn,if_exists='append')
+        select_sql = 'SELECT * FROM user_database'
+        print("DF2DB完了")
+        for row in cur.execute(select_sql):
+            print(row)
+        cur.close()
+        conn.close()
+    
 
-    df.to_sql('user_database',conn,if_exists='replace')
-    select_sql = 'SELECT * FROM user_database'
-    print("DF2DB完了")
-    for row in cur.execute(select_sql):
-        print(row)
-    cur.close()
-    conn.close()
         
 def main():
     basicConfig()
