@@ -19,7 +19,7 @@ public class GuiObj_Control {
         base_frame.setTitle("株式＿ポートフォリオ分析ツール");
 
         // ファイルを閉じたらプログラム終了（アプリ終了）
-        base_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);// EXIT_NO_CLOSEの部分変更で内容が変わる
+        base_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         base_frame.setSize(1000, 700);
 
         // whindowsの中央に配置
@@ -32,12 +32,6 @@ public class GuiObj_Control {
         label_title.setForeground(Color.BLACK);
         label_title.setPreferredSize(new Dimension(400, 50));
         label_title.setHorizontalAlignment(JLabel.CENTER);
-
-        // ボタン作成
-        // JButton seLogin_button = new JButton("証券口座ログイン");
-        // seLogin_button.setFont(new Font("Meiryo",Font.PLAIN, 14));
-        // seLogin_button.setPreferredSize(new Dimension(160,50));
-        // seLogin_button.setHorizontalAlignment(JButton.CENTER);
 
         JButton TOP_button = new JButton("TOPページ");
         TOP_button.setFont(new Font("Meiryo", Font.PLAIN, 14));
@@ -131,9 +125,5 @@ public class GuiObj_Control {
     public static void desp_config() {
         switchPanel(new Config());
     }
-
-    // public static void Analysis(){
-    // switchPanel();
-    // }
 
 }

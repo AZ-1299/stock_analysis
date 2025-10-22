@@ -1,11 +1,10 @@
 from pathlib import Path
 import sqlite3
-import logging
 import pandas as pd
 import os
 
 def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
-    logging.info("CSV2DF読み込み完了")
+    print("CSV2DF読み込み完了")
     try:
         input_FileAbspath = input_FileDir/input_FilePath
 
@@ -19,7 +18,7 @@ def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
         # TSEデータの下処理
         in_col_TSE = ["コード","33業種区分",]
         TSE_df = pd.read_csv(TSE_data_path, encoding="cp932", dtype={"コード": str})
-        logging.info("TSEデータ読み込み完了")
+        print("TSEデータ読み込み完了")
         new_TSE_df = TSE_df.loc[:,in_col_TSE]
         # print(new_TSE_df+"\n")
 
@@ -28,7 +27,7 @@ def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
         df_main = pd.read_csv(input_FileAbspath, encoding="utf-8", dtype={"コード": str})
         df_main_code = df_main.loc[:,in_col]
         print(df_main)
-        logging.info("ユーザポートフォリオ読み込み完了")
+        print("ユーザポートフォリオ読み込み完了")
 
         merged_df = pd.merge(df_main_code, new_TSE_df, on="コード", how="left")
         merged_df["口座"] = acoount
@@ -48,13 +47,6 @@ def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
 
     except:
         print("入力したファイルにデータはありませんでした。")
-
-
-def basicConfig():
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s [%(levelname)s] %(message)s",
-    )
 
 def init_dorp_db(parents_dir):
     out_path = parents_dir/"database"/"user_data"/"user_database.db"
