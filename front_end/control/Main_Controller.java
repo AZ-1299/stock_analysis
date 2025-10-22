@@ -6,21 +6,21 @@ import java.io.*;
 import java.nio.file.*;
 import javax.swing.JFileChooser;
 import java.util.logging.Logger;
-import java.util.ArrayList;
-import java.util.List;
+// import java.util.ArrayList;
+// import java.util.List;
 import java.util.logging.Level;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+// import java.sql.Connection;
+// import java.sql.DriverManager;
+// import java.sql.PreparedStatement;
+// import java.sql.ResultSet;
+// import java.sql.SQLException;
+// import java.sql.Statement;
 
 
 //ファイル参照
 import front_end.control.Main_Controller;
-import front_end.control.Make_Table;
-import front_end.gui.Portfolio;
+// import front_end.control.Make_Table;
+// import front_end.gui.Portfolio;
 
 
 public class Main_Controller {

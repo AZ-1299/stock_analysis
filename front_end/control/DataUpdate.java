@@ -1,6 +1,6 @@
 package front_end.control;
 
-import javax.swing.JTable;
+// import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 import front_end.control.Connect_DB.PortfolioRow;
@@ -21,6 +21,9 @@ public class DataUpdate extends AbstractTableModel {
     //ヘッダー名把握
     @Override
     public String getColumnName(int col) { return columnNames[col]; }
+    //フォント設定
+    
+
     //有効な行番号把握
     @Override
     public Object getValueAt(int row, int col) {
@@ -32,5 +35,5 @@ public class DataUpdate extends AbstractTableModel {
     public void setData(List<PortfolioRow> newData) {
     this.data = newData != null ? newData : new java.util.ArrayList<>();
     fireTableDataChanged(); 
-}
+    }
 }
