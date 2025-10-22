@@ -1,11 +1,11 @@
 package front_end.control;
 
+import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
 import front_end.control.Connect_DB.PortfolioRow;
 
 public class DataUpdate extends AbstractTableModel {
-    
     private List<PortfolioRow> data;
     private final String[] columnNames = {"コード", "銘柄名", "数量", "取得単価", "業種", "口座"};
 
@@ -29,4 +29,8 @@ public class DataUpdate extends AbstractTableModel {
         }
         return null;
     }
+    public void setData(List<PortfolioRow> newData) {
+    this.data = newData != null ? newData : new java.util.ArrayList<>();
+    fireTableDataChanged(); 
+}
 }

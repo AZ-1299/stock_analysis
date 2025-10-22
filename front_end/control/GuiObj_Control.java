@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 
 //ファイル参照
 import front_end.gui.*;
@@ -88,7 +89,6 @@ public class GuiObj_Control {
         // base_frame表示
         desp_default();
         base_frame.setVisible(true);
-
     }
 
     public static void exit_app() {
@@ -99,7 +99,6 @@ public class GuiObj_Control {
         centerPanel.removeAll();
 
         // デバック
-        // newPanel.setBackground(Color.PINK);
         centerPanel.add(newPanel, BorderLayout.CENTER);
         centerPanel.revalidate();
         centerPanel.repaint();
@@ -125,5 +124,14 @@ public class GuiObj_Control {
     public static void desp_config() {
         switchPanel(new Config());
     }
+<<<<<<< HEAD
 
+=======
+    public static void requestPortfolioTableUpdate() {
+    Component currentView = centerPanel.getComponent(0);
+    if (currentView instanceof Portfolio) {
+        ((Portfolio) currentView).updatePortfolioTable();
+    }
+}
+>>>>>>> 4a974710a3c5b499bc70b14df9578187d572c918
 }

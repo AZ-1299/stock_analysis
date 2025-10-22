@@ -20,6 +20,7 @@ import java.sql.Statement;
 //ファイル参照
 import front_end.control.Main_Controller;
 import front_end.control.Make_Table;
+import front_end.gui.Portfolio;
 
 
 public class Main_Controller {
@@ -70,7 +71,6 @@ public class Main_Controller {
                 "input_data",
                 "input_portfolio.py").normalize();
         logger.info("scriptPath is:" + scriptPath);
-        // File go2py_path = currentDir_next.toFile();
         String pythonScriptPath = scriptPath.toAbsolutePath().toString();
         ProcessBuilder go2py = new ProcessBuilder("python", "-u", pythonScriptPath);
 
@@ -80,10 +80,11 @@ public class Main_Controller {
         try {
             Process process = go2py.start();
             int exitCode = process.waitFor();
-            // desp_portfolio();
             if (exitCode == 0) {
                 System.out.println("Python script executed successfully.");
                 Connect_DB.input_db();
+                // Portfolio.update_page();
+                GuiObj_Control.requestPortfolioTableUpdate();
             } else {
                 System.out.println("Python script failed with exit code: " + exitCode);
             }
@@ -95,6 +96,7 @@ public class Main_Controller {
             System.out.println("Pythonは正常に動作しました");
             Connect_DB.input_db();
         }
+
     }
 
     
