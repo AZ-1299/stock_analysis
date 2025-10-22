@@ -80,7 +80,7 @@ def init_DF2DB(parents_dir,df,key):
 
         
 def main():
-    basicConfig()
+    # basicConfig()
     self_path = Path(__file__)
     parents_dir = self_path.resolve().parents[1]
     print(f"inpout is   {parents_dir}")

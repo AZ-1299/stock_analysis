@@ -84,7 +84,7 @@ public class Main_Controller {
                 System.out.println("Python script executed successfully.");
                 Connect_DB.input_db();
                 // Portfolio.update_page();
-                GuiObj_Control.requestPortfolioTableUpdate();
+                // GuiObj_Control.requestPortfolioTableUpdate();
             } else {
                 System.out.println("Python script failed with exit code: " + exitCode);
             }

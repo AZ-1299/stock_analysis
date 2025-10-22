@@ -124,14 +124,10 @@ public class GuiObj_Control {
     public static void desp_config() {
         switchPanel(new Config());
     }
-<<<<<<< HEAD
-
-=======
-    public static void requestPortfolioTableUpdate() {
-    Component currentView = centerPanel.getComponent(0);
-    if (currentView instanceof Portfolio) {
-        ((Portfolio) currentView).updatePortfolioTable();
-    }
-}
->>>>>>> 4a974710a3c5b499bc70b14df9578187d572c918
+//     public static void requestPortfolioTableUpdate() {
+//     Component currentView = centerPanel.getComponent(0);
+//     if (currentView instanceof Portfolio) {
+//         ((Portfolio) currentView).updatePortfolioTable();
+//     }
+// }
 }
