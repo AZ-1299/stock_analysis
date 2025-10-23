@@ -79,7 +79,7 @@ def init_DF2DB(parents_dir,df,key):
         cur.execute(add_column)
         conn.commit()
 
-        update_sql = 'UPDATE user_database SET total_value = qty*unit_value'
+        update_sql = 'INSERT INTO user_database(total_value) VALUES(qty*unit_value)'
         cur.execute(update_sql)
         conn.commit()
 
