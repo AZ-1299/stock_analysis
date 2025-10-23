@@ -1,8 +1,6 @@
 package front_end.control;
 
 //ライブラリ参照
-// import java.awt.Component;
-// import java.io.*;
 import java.util.List;
 
 import javax.swing.JTable;

@@ -34,6 +34,13 @@ def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
 
         merged_df = pd.merge(df_main, merged_df, on="コード", how="left")
         merged_df = merged_df.drop(columns=["買付日","前日比", "前日比（％）","損益","損益（％）","評価額"])
+        merged_df = merged_df.rename(columns={
+            'コード':'code',
+            '銘柄名':'name',
+            '株数': 'qty',     
+            '取得単価':'unit_value',
+            '33業種区分': 'industry'
+        })
         print(merged_df)
         
 
@@ -55,19 +62,30 @@ def init_dorp_db(parents_dir):
 def init_DF2DB(parents_dir,df,key):
     
     print("init_DF2DB開始")
-    out_path = parents_dir/"database"/"user_data"/"user_database.db" 
-    print(out_path)
+    connect_path = parents_dir/"database"/"user_data"/"user_database.db" 
+    print(connect_path)
 
-    conn = sqlite3.connect(out_path)
+    conn = sqlite3.connect(connect_path)
     cur = conn.cursor()
     if key == 0:  
         df.to_sql('user_database',conn,if_exists='replace')
+        
+
         select_sql = 'SELECT * FROM user_database'
-        print("DF2DB完了")
         for row in cur.execute(select_sql):
             print(row)
+
+        add_column = 'ALTER TABLE user_database ADD total_value FLOAT'
+        cur.execute(add_column)
+        conn.commit()
+
+        update_sql = 'UPDATE user_database SET total_value = qty*unit_value'
+        cur.execute(update_sql)
+        conn.commit()
+
         cur.close()
         conn.close()
+        print("DF2DB完了")
     else:
         df.to_sql('user_database',conn,if_exists='append')
         select_sql = 'SELECT * FROM user_database'
@@ -77,8 +95,6 @@ def init_DF2DB(parents_dir,df,key):
         cur.close()
         conn.close()
     
-
-        
 def main():
     # basicConfig()
     self_path = Path(__file__)

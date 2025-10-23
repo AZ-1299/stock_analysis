@@ -46,7 +46,8 @@ public static List<PortfolioRow> input_db() {
                         rs.getInt(3),
                         rs.getDouble(4),
                         rs.getString(5),
-                        rs.getString(6)));
+                        rs.getString(6),
+                        rs.getInt(7)));
             }
             System.out.println(rows);
             //自動で切断される
@@ -59,7 +60,7 @@ public static List<PortfolioRow> input_db() {
         }
 
     }
-    public record PortfolioRow(String code, String name, Integer qty, Double unit, String industry, String account) {
+    public record PortfolioRow(String code, String name, Integer qty, Double unit, String industry, String account, Integer total_value) {
         Object[] toArray() {return new Object[]{code,name,qty,unit,industry,account};
         }
     }
