@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 //ファイル参照
-// import front_end.control.Connect_DB.PortfolioRow;
 
 //DB接続→変数に代入
 public class Connect_DB {
