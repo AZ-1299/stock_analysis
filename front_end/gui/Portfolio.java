@@ -1,5 +1,4 @@
-package front_end.gui;
-
+package stock_analysis.front_end.gui;
 //ライブラリ参照
 import java.awt.Dimension;
 import java.awt.event.*;
@@ -18,9 +17,9 @@ import java.awt.Font;
 
 //ファイル参照
 // import front_end.control.Connect_DB;
-import front_end.control.DataUpdate;
-import front_end.control.Main_Controller;
-import front_end.control.Make_Table;;
+import stock_analysis.front_end.control.DataUpdate;
+import stock_analysis.front_end.control.Main_Controller;
+import stock_analysis.front_end.control.Make_Table;;
 
 public class Portfolio extends JPanel {
     private JTable portfolioTable;
@@ -41,6 +40,7 @@ public class Portfolio extends JPanel {
         
         file_choice_button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                System.out.println("ポートフォリオファイルを選択");
                 ctrl.java2python(null);
                 System.out.println("Portfolio.javaにアクセス");
             }

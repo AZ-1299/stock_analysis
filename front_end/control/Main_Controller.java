@@ -1,4 +1,4 @@
-package front_end.control;
+package stock_analysis.front_end.control;
 
 //ライブラリ参照
 import java.awt.Component;
@@ -6,19 +6,11 @@ import java.io.*;
 import java.nio.file.*;
 import javax.swing.JFileChooser;
 import java.util.logging.Logger;
-// import java.util.ArrayList;
-// import java.util.List;
 import java.util.logging.Level;
-// import java.sql.Connection;
-// import java.sql.DriverManager;
-// import java.sql.PreparedStatement;
-// import java.sql.ResultSet;
-// import java.sql.SQLException;
-// import java.sql.Statement;
 
 
 //ファイル参照
-import front_end.control.Main_Controller;
+import stock_analysis.front_end.control.Main_Controller;
 // import front_end.control.Make_Table;
 // import front_end.gui.Portfolio;
 
@@ -32,7 +24,7 @@ public class Main_Controller {
 
     // ユーザのポートフォリオ情報が記載されているSCVをコピー
     public void java2python(Component parent) {
-        System.out.println("Coll out Java2Python");
+        System.out.println("Java2Python実行");
         String selfPath = new File("controller.java").getAbsolutePath();
         logger.info("controller.java path is " + selfPath);
         JFileChooser filechooser = new JFileChooser();

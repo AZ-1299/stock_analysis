@@ -4,12 +4,12 @@ import logging
 import unicodedata
 import csv
 import sys
+import re
+
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from database import control
-
-
 logging.basicConfig(level=logging.INFO)
-print("input_portfolio 開始")
+
 #全角/半角などの揺れを吸収
 def normalize(text):
     return unicodedata.normalize("NFKC", str(text))
@@ -17,7 +17,8 @@ def normalize(text):
 #パス設定
 self_path = os.path.dirname(os.path.abspath(__file__))
 csv_path = os.path.join(self_path, "New_file.csv")
-
+back_end_path = os.path.dirname(self_path)
+print("back_end_path is : "+ back_end_path)
 #カラム名
 koumoku = [
     "コード", "銘柄名",
@@ -38,9 +39,11 @@ logging.info("ファイル読み込み成功")
 
 def extract_section(df, keyword, end_owed_1, end_owed_2, output_filename):
     keyword = normalize(keyword)
-
+    df["raw"] = df["raw"].astype(str)
     section_start = df[df["raw"].str.contains(keyword, na=False)]
     if section_start.empty:
+        output_path = os.path.join(self_path, output_filename)
+        drop_csv(self_path, output_filename)
         print(f"「{keyword}」を含むデータは存在しません。")
         return
     start_idx = section_start.index[0]
@@ -48,10 +51,9 @@ def extract_section(df, keyword, end_owed_1, end_owed_2, output_filename):
 
     code_line_idx = None
     for i in range(start_idx + 1, min(start_idx + 15, len(df))):
-        if normalize("銘柄（コード）") in df.loc[i, "raw"]:
+        if re.search(r"銘柄.*コード", df.loc[i, "raw"]):
             code_line_idx = i
             break
-
     if code_line_idx is None:
         print(f"「銘柄（コード）」が {keyword} セクション内に見つかりませんでした。")
         return
@@ -88,16 +90,29 @@ def extract_section(df, keyword, end_owed_1, end_owed_2, output_filename):
         return
 
     df_data = pd.DataFrame(records, columns=koumoku)
-    output_path = os.path.join(self_path, output_filename)
+    output_path = os.path.join(self_path,output_filename)
     df_data.to_csv(output_path, index=False, encoding="utf-8-sig")
+    print("出力先 "+output_path)
     logging.info(f"{keyword} 出力：{output_path}")
 
-    
-# if __name__ == "__main__":
+def drop_csv(file_dir,file_name):
+    print("drop csv 実行")
+    file_path = os.path.join(file_dir,file_name)
+    with open(file_path, 'w', newline='') as f:
+        pass
+
+
+print("input_portfolio 開始")
+self_path = os.path.dirname(os.path.abspath(__file__))
+print("self_path is : "+self_path)
+drop_csv(self_path,"user_portfolio_special.csv")
+drop_csv(self_path,"user_portfolio_accumulate.csv")
+drop_csv(self_path,"user_portfolio_spot.csv")
+
 extract_section(df_all, "成長投資枠","つみたて投資枠","特定預り","user_portfolio_special.csv")
 extract_section(df_all, "つみたて投資枠","特定預り","成長投資枠","user_portfolio_accumulate.csv")
 extract_section(df_all, "特定預り","成長投資枠","つみたて投資枠","user_portfolio_spot.csv")
 
-logging.info("株式データの抽出完了")
+print("株式データの抽出完了")
 print("input_portfolio 終了")
 control.main()

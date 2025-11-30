@@ -1,5 +1,4 @@
-package front_end.control;
-
+package stock_analysis.front_end.control;
 //ライブラリ参照
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -10,27 +9,27 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.*;
+
+import stock_analysis.front_end.control.Connect_DB.PortfolioRow;
 
 //ファイル参照
 
-//DB接続→変数に代入
+//DB接続と変数代入
 public class Connect_DB {
 public static List<PortfolioRow> input_db() {
-        System.out.println("input_DB 実行");
-        Path selfPath = Paths.get("").toAbsolutePath();
-        String string_seflPath = selfPath.toString();
-        System.out.println("string_seflPath is : " + string_seflPath);
-        Path dbPath = selfPath.resolve(Paths.get(
-                "back_end",
-                "database",
-                "user_data",
-                "user_database.db")).normalize();
+        System.out.println("input_db 実行");
+        Path RootDir = Paths.get("").toAbsolutePath();
+        String string_RootDir = RootDir.toString();
+        System.out.println("RootDir is : " + string_RootDir);
+        Path dbPath = RootDir.resolve(Paths.get("back_end","database","user_data","user_database.db")).normalize();
         String url = "jdbc:sqlite:" + dbPath.toString();
+        System.out.println("url is : " + url);
 
         // DB接続
         String string_dbpath = dbPath.toString();
         System.out.println("dbPath is : " + string_dbpath);
-        String sql = "SELECT コード, 銘柄名, 数量, 取得単価, \"33業種区分\" AS 業種,口座 FROM user_database";
+        String sql = "SELECT * FROM user_database";
 
         try (Connection conn = DriverManager.getConnection(url);
                 PreparedStatement ps = conn.prepareStatement(sql);
@@ -52,7 +51,7 @@ public static List<PortfolioRow> input_db() {
             //自動で切断される
             System.out.printf("DB切断\n");
             return rows;
-            
+
         } catch (SQLException e) {
             System.err.println("DB取得失敗");
             return new ArrayList<>();

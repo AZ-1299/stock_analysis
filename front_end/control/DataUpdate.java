@@ -1,9 +1,10 @@
-package front_end.control;
+package stock_analysis.front_end.control;
 
 // import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import java.util.List;
-import front_end.control.Connect_DB.PortfolioRow;
+
+import stock_analysis.front_end.control.Connect_DB.PortfolioRow;
 
 public class DataUpdate extends AbstractTableModel {
     private List<PortfolioRow> data;

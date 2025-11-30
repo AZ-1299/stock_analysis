@@ -1,10 +1,9 @@
-package front_end.gui;
-
+package stock_analysis.front_end.gui;
 //ライブラリ参照
 import javax.swing.SwingUtilities;
 
 //ファイル参照
-import front_end.control.GuiObj_Control;
+import stock_analysis.front_end.control.GuiObj_Control;
 
 public class Main {
     public static void main(String[] args) {

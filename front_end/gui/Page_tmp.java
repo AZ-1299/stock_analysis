@@ -1,5 +1,4 @@
-package front_end.gui;
-import java.awt.Dimension;
+package stock_analysis.front_end.gui;import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.GridBagLayout;

@@ -1,5 +1,4 @@
-package front_end.gui;
-import javax.swing.*;
+package stock_analysis.front_end.gui;import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Color;

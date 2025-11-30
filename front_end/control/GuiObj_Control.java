@@ -1,4 +1,4 @@
-package front_end.control;
+package stock_analysis.front_end.control;
 
 //ライブラリ参照
 import javax.swing.*;
@@ -9,7 +9,7 @@ import java.awt.Color;
 // import java.awt.Component;
 
 //ファイル参照
-import front_end.gui.*;
+import stock_analysis.front_end.gui.*;
 
 public class GuiObj_Control {
     private static JPanel centerPanel;

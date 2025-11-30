@@ -1,4 +1,4 @@
-package front_end.control;
+package stock_analysis.front_end.control;
 
 //ライブラリ参照
 import java.util.List;
