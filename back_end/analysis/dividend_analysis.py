@@ -5,7 +5,11 @@
 import numpy as np
 from pathlib import Path
 import sqlite3
-def desp_db(parents_dir):
+import matplotlib.pyplot as plt
+
+def DB(parents_dir):
+    graph_output_dir = parents_dir.joinpath("img")
+
     open_path = parents_dir.joinpath("database", "user_data", "user_database.db")    
     desp_dbconn  = 'SELECT * FROM user_database'
     try:
@@ -17,13 +21,43 @@ def desp_db(parents_dir):
         for row in rows:
             print(row)
 
-    except:
-        print("エラー")
-    
+        #変数定義
+        height,x = [],[]
+        num = len(rows)
+        for i in range(num):
+            x.append(i)
+
+        #構成比率
+        
+        print("\n#------構成比率のグラフを描画開始------#")
+        #銘柄ごと
+        query_label = "SELECT name FROM user_database"
+        query_data = "SELECT total_value FROM user_database"
+        cur.execute(query_label)
+        label = cur.fetchall()
+        label = np.array(label).flatten()
+        print(label)
+        print("ステップ1 完了")
+
+        cur.execute(query_data)
+        height  = cur.fetchall()
+        height = np.array(height).flatten()
+        print(height)
+        print("ステップ2 完了")
+
+        plt.bar(x,height,tick_label=label,align="center") 
+        print("ステップ3.1 完了")
+        graph_output_path = parents_dir.joinpath("graph.png")
+        plt.savefig(graph_output_path)
+        print("ステップ3.2 完了")
+
+    except Exception as e:
+        print(f"エラー：{e}")
 
 if __name__ =='__main__':
-    print("dividend_analysis.pyに接続")
+    print("\ndividend_analysis.pyに接続")
     self_path = Path(__file__)
     parents_dir = self_path.resolve().parents[1]
-    desp_db(parents_dir)
+    DB(parents_dir)
+    
 

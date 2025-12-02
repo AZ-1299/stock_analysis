@@ -99,6 +99,9 @@ def DF2DB(parents_dir,df,key):
     elif key == 1:  
         df.to_sql('user_database',conn,if_exists='append',index=False)
         select_sql = 'SELECT * FROM user_database'
+        update_sql = 'UPDATE user_database SET total_value = qty * unit_value'
+        cur.execute(update_sql)
+        conn.commit()
         print("DF2DB完了")
         for row in cur.execute(select_sql):
             print(row)
