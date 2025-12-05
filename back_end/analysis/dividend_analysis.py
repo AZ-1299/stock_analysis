@@ -30,27 +30,39 @@ def DB(parents_dir):
 
         #構成比率
         
-        print("\n#------構成比率のグラフを描画開始------#")
+        print("\n#------全体を対象とした棒グラフを描画開始------#")
         #銘柄ごと
         query_label = "SELECT name FROM user_database"
         query_data = "SELECT total_value FROM user_database"
         cur.execute(query_label)
         label = cur.fetchall()
         label = np.array(label).flatten()
-        print(label)
-        # print("ステップ1 完了")
 
         cur.execute(query_data)
         height  = cur.fetchall()
         height = np.array(height).flatten()
-        print(height)
-        # print("ステップ2 完了")
+    
         plt.xticks(rotation=90)
         plt.bar(x,height,tick_label=label,align="center") 
-        # print("ステップ3.1 完了")
+        graph_output_path = graph_output_dir.joinpath("all_graph.png")
+        plt.savefig(graph_output_path,bbox_inches='tight')
+        print("\n#------完了------#\n")
+
+        query_label = "SELECT industry FROM user_database"
+        query_data = "SELECT industry, SUM(total_value) AS industry_total_value FROM user_database GROUP BY industry;"
+        cur.execute(query_label)
+        label = cur.fetchall()
+        label = np.array(label).flatten()
+
+        cur.execute(query_data)
+        height  = cur.fetchall()
+        height = np.array(height).flatten()
+    
+        plt.xticks(rotation=90)
+        plt.bar(x,height,tick_label=label,align="center") 
         graph_output_path = graph_output_dir.joinpath("graph.png")
         plt.savefig(graph_output_path,bbox_inches='tight')
-        # print("ステップ3.2 完了")
+
 
     except Exception as e:
         print(f"エラー：{e}")
@@ -60,5 +72,3 @@ if __name__ =='__main__':
     self_path = Path(__file__)
     parents_dir = self_path.resolve().parents[1]
     DB(parents_dir)
-    
-
