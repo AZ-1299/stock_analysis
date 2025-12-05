@@ -3,3 +3,4 @@ venv/
 back_end/database/user_data/*
 back_end/input_data/*
 !back_end/input_data/input_portfolio.py
+C:/Users/azeru/git/stock_analysis/back_end/analysis/img/*
