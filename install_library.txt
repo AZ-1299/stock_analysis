@@ -1,3 +1,5 @@
 python -m venv .venv
 pip isntall pandas
 pip install pathlib
+pip install setuptools
+pip install matplotlib

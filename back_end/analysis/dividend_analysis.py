@@ -5,10 +5,11 @@
 import numpy as np
 from pathlib import Path
 import sqlite3
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt  
+import japanize_matplotlib  
 
 def DB(parents_dir):
-    graph_output_dir = parents_dir.joinpath("img")
+    graph_output_dir = parents_dir.joinpath("analysis","img")
 
     open_path = parents_dir.joinpath("database", "user_data", "user_database.db")    
     desp_dbconn  = 'SELECT * FROM user_database'
@@ -37,19 +38,19 @@ def DB(parents_dir):
         label = cur.fetchall()
         label = np.array(label).flatten()
         print(label)
-        print("ステップ1 完了")
+        # print("ステップ1 完了")
 
         cur.execute(query_data)
         height  = cur.fetchall()
         height = np.array(height).flatten()
         print(height)
-        print("ステップ2 完了")
-
+        # print("ステップ2 完了")
+        plt.xticks(rotation=90)
         plt.bar(x,height,tick_label=label,align="center") 
-        print("ステップ3.1 完了")
-        graph_output_path = parents_dir.joinpath("graph.png")
-        plt.savefig(graph_output_path)
-        print("ステップ3.2 完了")
+        # print("ステップ3.1 完了")
+        graph_output_path = graph_output_dir.joinpath("graph.png")
+        plt.savefig(graph_output_path,bbox_inches='tight')
+        # print("ステップ3.2 完了")
 
     except Exception as e:
         print(f"エラー：{e}")
