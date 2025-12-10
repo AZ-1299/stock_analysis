@@ -22,7 +22,11 @@ def plot_stock_bar_chart(cur, graph_output_dir, rows):
     height = cur.fetchall()
     height = np.array(height).flatten()
 
-    plt.xticks(x, label, rotation=90)
+    sorted_indices = np.argsort(height)[::-1]
+    height = height[sorted_indices]
+    label = label[sorted_indices]
+    
+    plt.xticks(x, label, rotation=90,)
     plt.bar(x, height, tick_label=label, align="center") 
     graph_output_path = graph_output_dir.joinpath("all_graph.png")
     plt.savefig(graph_output_path, bbox_inches='tight')
