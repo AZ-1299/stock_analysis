@@ -38,15 +38,16 @@ def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
             'コード':'code',
             '銘柄名':'name',
             '数量': 'qty',     
-            '取得単価':'unit_value',
+            '取得単価':'unit',
             '33業種区分': 'industry',
-            '口座': 'account'
+            '口座': 'account',
+            '評価額':'total_value'
         })
         # print("rename merged_df is : ", merged_df)        
 
-        target_columns = ['code', 'name', 'qty', 'unit_value', 'industry', 'account']
+        target_columns = ['code', 'name', 'qty', 'unit_value', 'industry', 'account','total_value']
         merged_df = merged_df[target_columns]
-        print("Merged DataFrame Sample:\n", merged_df.head(2))
+        print("Merged DataFrame Sample:\n", merged_df.head())
         
         if input_FilePath=='user_portfolio_special.csv':
             key = 0

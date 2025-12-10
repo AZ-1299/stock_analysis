@@ -18,13 +18,13 @@ import stock_analysis.front_end.control.Connect_DB.PortfolioRow;
 //DB接続と変数代入
 public class Connect_DB {
 public static List<PortfolioRow> input_db() {
-        System.out.println("input_db 実行");
+        System.out.println("Connect_DB.java : input_db 実行");
         Path RootDir = Paths.get("").toAbsolutePath();
         String string_RootDir = RootDir.toString();
-        System.out.println("RootDir is : " + string_RootDir);
+        // System.out.println("RootDir is : " + string_RootDir);
         Path dbPath = RootDir.resolve(Paths.get("back_end","database","user_data","user_database.db")).normalize();
         String url = "jdbc:sqlite:" + dbPath.toString();
-        System.out.println("url is : " + url);
+        // System.out.println("url is : " + url);
 
         // DB接続
         String string_dbpath = dbPath.toString();
@@ -53,7 +53,7 @@ public static List<PortfolioRow> input_db() {
             return rows;
 
         } catch (SQLException e) {
-            System.err.println("DB取得失敗");
+            System.err.println(e);
             return new ArrayList<>();
         }
 
