@@ -45,7 +45,7 @@ def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
         })
         # print("rename merged_df is : ", merged_df)        
 
-        target_columns = ['code', 'name', 'qty', 'unit_value', 'industry', 'account','total_value']
+        target_columns = ['code', 'name', 'qty', 'unit', 'industry', 'account','total_value']
         merged_df = merged_df[target_columns]
         print("Merged DataFrame Sample:\n", merged_df.head())
         
