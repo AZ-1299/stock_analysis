@@ -54,7 +54,7 @@ def plot_industry_pie_chart(cur, graph_output_dir):
     )
     plt.title("業種別ポートフォリオ構成比率")
     plt.axis('equal')
-    graph_output_path = graph_output_dir.joinpath("graph.png")
+    graph_output_path = graph_output_dir.joinpath("industry_graph.png")
     plt.savefig(graph_output_path, bbox_inches='tight')
     plt.close()
 

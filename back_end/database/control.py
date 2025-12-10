@@ -58,7 +58,7 @@ def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
             DF2DB(parents_dir,merged_df,key)
 
     except Exception as e:
-        print(f"エラー: ファイル処理中に問題が発生しました: {e}")
+        print(f"エラー: {e}")
     
 def DF2DB(parents_dir,df,key):
     
