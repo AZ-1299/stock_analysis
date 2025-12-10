@@ -56,11 +56,6 @@ def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
             key = 1
             DF2DB(parents_dir,merged_df,key)
 
-            # db_path = parents_dir.joinpath("database", "user_data", "user_database.db")
-            # if not db_path.exists():
-            #     key = 0
-            # init_DF2DB(parents_dir,merged_df,key)
-
     except Exception as e:
         print(f"エラー: ファイル処理中に問題が発生しました: {e}")
     
