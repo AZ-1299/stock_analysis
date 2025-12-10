@@ -84,7 +84,7 @@ def DF2DB(parents_dir,df,key):
         cur.execute(add_column)
         conn.commit()
 
-        update_sql = 'UPDATE user_database SET total_value = qty * unit_value'
+        update_sql = 'UPDATE user_database SET total_value = CAST(qty AS REAL) * CAST(unit_value AS REAL)WHERE total_value IS NULL;'
         cur.execute(update_sql)
         conn.commit()
         cur.close()
