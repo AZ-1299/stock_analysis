@@ -22,11 +22,29 @@ def on_db(parents_dir):
         for row in rows:
             code = row[0]
             ticker_code.append(str(code) + ".T")
-        for i in ticker_code:
-            print(i)
+        print(ticker_code)
+        
+        now_val(ticker_code)
     except:
         print(sys.exc_info())
 
+def now_val(ticker_code):
+    print("now val起動")
+    try:
+        for i in ticker_code:
+            STOCK = yf.Ticker(i) 
+            STOCK_dividends = STOCK.dividends
+            
+            if not STOCK_dividends.empty:
+                latest_dividend_amount = STOCK_dividends.iloc[-1]
+                latest_dividend_date = STOCK_dividends.index[-1]
+                print(f"`code:{i} 最新配当金額: {latest_dividend_amount}")
+
+
+    except:
+        print("エラー")
+        print(sys.exc_info())
+   
 
 if __name__ == "__main__":
     print("api.py 起動")
