@@ -1,6 +1,10 @@
 python -m venv .venv
-pip isntall pandas
+python.exe -m pip install --upgrade pip
+pip install pandas
 pip install pathlib
 pip install setuptools
 pip install matplotlib
 pip install yfinance
+pip install japanize-matplotlib
+
+

@@ -37,7 +37,7 @@ public class Main_Controller {
                         "..",
                         "back_end",
                         "input_data");
-                logger.info("INFO: input_path is:" + input_path);
+                // logger.info("INFO: input_path is:" + input_path);
                 File inputDir = input_path.toFile();
                 if (!inputDir.exists()) {
                     inputDir.mkdirs();
@@ -91,5 +91,9 @@ public class Main_Controller {
 
     }
 
+    // public void desp_imgGraph(){
+
+
+    // }
     
 }
