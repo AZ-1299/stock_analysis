@@ -8,7 +8,17 @@ def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
     try:
         input_FileAbspath = Path(input_FileDir).joinpath(input_FilePath)        
         print(input_FileAbspath)
+        
+        if os.stat(input_FileAbspath).st_size == 0:
+            print(f"スキップ: {input_FilePath} は空ファイルです。")
+            return
+
         df_main = pd.read_csv(str(input_FileAbspath), encoding="utf-8", dtype={"コード": str}) 
+        
+        if df_main.empty:
+            print(f"スキップ: {input_FilePath} にデータ行がありません。")
+            return
+
         if input_FilePath == "user_portfolio_special.csv":
             acoount = "NISA"
         elif input_FilePath == "user_portfolio_accumulate.csv":
@@ -26,14 +36,13 @@ def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
         # ユーザポートフォリオcsv
         in_col = ["コード"]
         df_main_code = df_main.loc[:,in_col]
-        # print(df_main)
         print("ユーザポートフォリオ読み込み完了")
 
         merged_df = pd.merge(df_main_code, new_TSE_df, on="コード", how="left")
         merged_df["口座"] = acoount
 
         merged_df = pd.merge(df_main, merged_df, on="コード", how="left")
-        drop_cols = ["買付日", "前日比", "前日比（％）", "損益", "損益（％）", "評価額", "現在値"]        
+        
         merged_df = merged_df.rename(columns={
             'コード':'code',
             '銘柄名':'name',
@@ -43,72 +52,85 @@ def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
             '口座': 'account',
             '評価額':'total_value'
         })
-        # print("rename merged_df is : ", merged_df)        
-
+        
         target_columns = ['code', 'name', 'qty', 'unit', 'industry', 'account','total_value']
         merged_df = merged_df[target_columns]
         print("Merged DataFrame Sample:\n", merged_df.head())
-        
+
         if input_FilePath=='user_portfolio_special.csv':
             key = 0
-            # init_dorp_db(parents_dir)
             DF2DB(parents_dir,merged_df,key)
         else:
             key = 1
             DF2DB(parents_dir,merged_df,key)
 
+    except pd.errors.EmptyDataError:
+        print(f"スキップ: {input_FilePath} はデータを含んでいません。")
     except Exception as e:
         print(f"エラー: {e}")
-    
+
+
 def DF2DB(parents_dir,df,key):
-    
     print("DF2DB開始")
     connect_path = parents_dir.joinpath("database", "user_data", "user_database.db")    
-    # print(connect_path)
-
-    conn = sqlite3.connect(connect_path)
-    cur = conn.cursor()
 
     #データベース作成
-    if key == 0:  
-        out_path = parents_dir.joinpath("database", "user_data", "user_database.db")    
-        os.remove(out_path)
+    if key == 0: 
+        try:
+            print("インフォ：key=0")
+            out_path = parents_dir.joinpath("database","user_data","user_database.db")
+            
+            if os.path.exists(out_path):
+                dropDB(out_path)
 
-        df.to_sql('user_database', conn, if_exists='replace', index=False)        
+            conn = sqlite3.connect(connect_path)
+            cur = conn.cursor()
 
-        select_sql = 'SELECT * FROM user_database'
-        for row in cur.execute(select_sql):
-            print(row)
+            df.to_sql('user_database', conn, if_exists='replace', index=False)        
 
-        add_column = 'ALTER TABLE user_database ADD total_value FLOAT'
-        cur.execute(add_column)
-        conn.commit()
+            select_sql = 'SELECT * FROM user_database'
+            for row in cur.execute(select_sql):
+                print(row)
 
-        update_sql = 'UPDATE user_database SET total_value = CAST(qty AS REAL) * CAST(unit_value AS REAL)WHERE total_value IS NULL;'
-        cur.execute(update_sql)
-        conn.commit()
-        cur.close()
-        conn.close()
-        print("DF2DB完了")
+            update_sql = 'UPDATE user_database SET total_value = CAST(qty AS REAL) * CAST(unit AS REAL) WHERE total_value IS NULL;'
+            cur.execute(update_sql)
+            conn.commit()
+            cur.close()
+            conn.close()
+            print("DF2DB完了")
+        except Exception as e:
+            print(f"key=0 : エラー {e}")
 
     #データベース追加
-    elif key == 1:  
-        df.to_sql('user_database',conn,if_exists='append',index=False)
-        select_sql = 'SELECT * FROM user_database'
-        update_sql = 'UPDATE user_database SET total_value = qty * unit_value'
-        cur.execute(update_sql)
-        conn.commit()
-        print("DF2DB完了")
-        for row in cur.execute(select_sql):
-            print(row)
-        cur.close()
-        conn.close()
+    elif key == 1:
+        try:
+            print("インフォ：key=1")
+            conn = sqlite3.connect(connect_path)
+            cur = conn.cursor()
+            df.to_sql('user_database',conn,if_exists='append',index=False)
+            
+            select_sql = 'SELECT * FROM user_database'
+            update_sql = 'UPDATE user_database SET total_value = qty * unit WHERE total_value IS NULL'
+            cur.execute(update_sql)
+            conn.commit()
+            print("DF2DB完了")
+            for row in cur.execute(select_sql):
+                print(row)
+            cur.close()
+            conn.close()
+        except Exception as e:
+            print(f"key=1 : エラー {e}")
+
+def dropDB(out_path):
+    print("dropDB")
+    try:
+        os.remove(out_path)
+    except Exception as e:
+        print(f"削除失敗: {e}")
 
 def main():
-    # basicConfig()
     self_path = Path(__file__)
     parents_dir = self_path.resolve().parents[1]
-    # print(f"inpout is   {parents_dir}")
     TSE_data_path = parents_dir.joinpath("database", "static", "TSE_data.csv")
     input_FileDir = parents_dir.joinpath("input_data")
 
