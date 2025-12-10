@@ -3,3 +3,4 @@ pip isntall pandas
 pip install pathlib
 pip install setuptools
 pip install matplotlib
+pip install yfinance
