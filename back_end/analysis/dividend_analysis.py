@@ -44,7 +44,7 @@ def plot_industry_pie_chart(cur, graph_output_dir):
     height = raw_data_np[:, 1].astype(float)
     label = raw_data_np[:, 0]
     
-    plt.figure(figsize=(10, 8))
+    plt.figure(figsize=(8,5))
     plt.pie(
         height,
         labels=label,

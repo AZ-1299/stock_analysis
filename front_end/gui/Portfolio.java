@@ -2,21 +2,16 @@ package stock_analysis.front_end.gui;
 //ライブラリ参照
 import java.awt.Dimension;
 import java.awt.event.*;
-// import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-// import java.awt.Component;  
 import javax.swing.JTable;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-// import java.awt.Label;
-
 
 //ファイル参照
-// import front_end.control.Connect_DB;
 import stock_analysis.front_end.control.DataUpdate;
 import stock_analysis.front_end.control.Main_Controller;
 import stock_analysis.front_end.control.Make_Table;;
@@ -64,6 +59,6 @@ public class Portfolio extends JPanel {
         this.revalidate(); 
         this.repaint();    
         
-        System.out.println("テーブルを新しいデータで再描画しました。");
+        System.out.println("テーブルを新しいデータで再描画しました");
     }
 }
