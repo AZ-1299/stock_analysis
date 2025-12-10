@@ -59,7 +59,9 @@ public static List<PortfolioRow> input_db() {
 
     }
     public record PortfolioRow(String code, String name, Integer qty, Double unit, String industry, String account, Integer total_value) {
-        Object[] toArray() {return new Object[]{code,name,qty,unit,industry,account};
+        Object[] toArray() {return new Object[]{
+            code,name,qty,unit,industry,account,total_value
+        };
         }
     }
 

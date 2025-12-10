@@ -8,7 +8,7 @@ import stock_analysis.front_end.control.Connect_DB.PortfolioRow;
 
 public class DataUpdate extends AbstractTableModel {
     private List<PortfolioRow> data;
-    private final String[] columnNames = {"コード", "銘柄名", "数量", "取得単価", "業種", "口座"};
+    private final String[] columnNames = {"コード", "銘柄名", "数量", "取得単価", "業種", "口座","評価額"};
 
     public DataUpdate(List<PortfolioRow> data) {
         this.data = data != null ? data : new java.util.ArrayList<>();
