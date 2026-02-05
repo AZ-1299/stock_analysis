@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import javax.imageio.ImageIO;
+import java.applet.Applet;
 
 public class Analysis extends JPanel {
     
@@ -62,7 +64,14 @@ public class Analysis extends JPanel {
         //画像2つ目
         JLabel industry_graph = new JLabel();
         if (industry_graph_Path.toFile().exists()) {
+            // ImageIcon icon = (ImageIcon) industry_graph.getIcon();
+            // Image originalImage = icon.getImage();
+            // int originalWidth = originalImage.getWidth(industry_graph);
+            // int originalHeight = originalImage.getHeight(industry_graph);
+            // int newWidth = (int) (originalWidth * 0.5);
+            // int newHeight = (int) (originalHeight * 0.5);
             industry_graph.setIcon(new ImageIcon(industry_graph_Path.toString()));
+
         } else {
             industry_graph.setText("industry_graph.png not found");
         }
