@@ -9,7 +9,9 @@ def db_connect(con_path):
     cur = con.cursor()
     cur.execute(get_code)
     rows = cur.fetchall()
-    return rows
+    select_sql = 'SELECT * FROM user_database'
+    for row in cur.execute(select_sql):
+        print(row)
 
 def now_price():
     print("now_price関数開始")
@@ -24,4 +26,4 @@ if __name__ == "__main__":
         "user_database.db"
     )
     print(f"DB Path: {con_path}")
-    
+    db_connect(con_path)
