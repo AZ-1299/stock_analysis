@@ -21,16 +21,15 @@ def now_price(codes,ut):
     print("now_price関数開始")
     ticker_codes = [f"{code}.T" for code in codes]
     print(ticker_codes)
-
-    now_price = []
+    close_prices = {}
     for i in ticker_codes:
-        now_price.append(yf.download(tickers=i,period='1d',interval="1d"))
+        df = yf.download(i,period="1d", progress=False)
+        val = df['Close'].iloc[-1]
+        close_prices[i] = float(val)
     
-    print(now_price)
-    return now_price
-
-    
-
+    print("株価取得完了")
+    print(close_prices)
+    return close_prices
 
 if __name__ == "__main__":
     print("input_data.py 開始")
@@ -50,3 +49,4 @@ if __name__ == "__main__":
     ut = dt.date()
     print(f"Now time is {ut}")
     new_now_price = now_price(codes,ut)
+    print("完走")
