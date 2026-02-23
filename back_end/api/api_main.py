@@ -2,7 +2,6 @@ import pandas as pd
 import sqlite3
 from pathlib import Path
 import yfinance as yf
-import datetime
 
 
 def db_getCode(con_path):
@@ -17,7 +16,7 @@ def db_getCode(con_path):
     codes = [row[0] for row in cur.fetchall()]
     return codes
 
-def now_price(codes,ut):
+def now_price(codes):
     print("now_price関数開始")
     ticker_codes = [f"{code}.T" for code in codes]
     print(ticker_codes)
@@ -31,10 +30,11 @@ def now_price(codes,ut):
     print(close_prices)
     return close_prices
 
-if __name__ == "__main__":
+def main_update():
     print("input_data.py 開始")
+    print("main_update 開始")
     root_dir = Path(__file__).resolve().parent.parent
-    print(f"Root Directory: {root_dir}")
+    # print(f"Root Directory: {root_dir}")
     con_path = root_dir.joinpath(
         "database",
         "user_data",
@@ -45,8 +45,18 @@ if __name__ == "__main__":
     print("get codes")
     print(codes)
 
-    dt = datetime.datetime.today()
-    ut = dt.date()
-    print(f"Now time is {ut}")
-    new_now_price = now_price(codes,ut)
-    print("完走")
+    current_value = now_price(codes)
+    return current_value
+
+def main_mkDB(ticker_codes):
+    print("input_data.py 開始")
+    print("main_kmDB 開始")
+    codes = db_getCode(ticker_codes)
+    print("get codes")
+
+    current_value = now_price(codes)
+    print(current_value)
+    return current_value
+
+if __name__ == "__main__":
+    main_update()

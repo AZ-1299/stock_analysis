@@ -2,6 +2,7 @@ from pathlib import Path
 import sqlite3
 import pandas as pd
 import os
+from api import api_main
 
 def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
     print("\ncontrole.py : CSV2DF読み込み開始")
@@ -35,8 +36,15 @@ def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
 
         # ユーザポートフォリオcsv
         in_col = ["コード"]
+        # print(f"コードis: {in_col}")
         df_main_code = df_main.loc[:,in_col]
         print("ユーザポートフォリオ読み込み完了")
+
+        #------------------ここで現在値取得かも？---------------------#
+        # ticker_codes = pd.read_csv(encoding="cp932", dtype={"コード": str})
+        # print(f"ticker_codes is : {ticker_codes}")
+        # current_value = api_main.main_mkDB()
+
 
         merged_df = pd.merge(df_main_code, new_TSE_df, on="コード", how="left")
         merged_df["口座"] = acoount
@@ -48,12 +56,13 @@ def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
             '銘柄名':'name',
             '数量': 'qty',     
             '取得単価':'unit',
+            '現在値':'current_value',
             '33業種区分': 'industry',
             '口座': 'account',
             '評価額':'total_value'
         })
         
-        target_columns = ['code', 'name', 'qty', 'unit', 'industry', 'account','total_value']
+        target_columns = ['code', 'name', 'qty', 'unit', 'current_value','industry', 'account','total_value']
         merged_df = merged_df[target_columns]
         print("Merged DataFrame Sample:\n", merged_df.head())
 
@@ -73,6 +82,12 @@ def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
 def DF2DB(parents_dir,df,key):
     print("DF2DB開始")
     connect_path = parents_dir.joinpath("database", "user_data", "user_database.db")    
+    
+    #現在値取得(作業途中)
+    col_code = df.drop( columns=['name','qty','unit','current_value','industry','account','total_value'])
+    # print(f"Codes is: {col_code}")
+    col_code = col_code[['code']].values
+    current_values =  api_main.main_mkDB(col_code)
 
     #データベース作成
     if key == 0: 
