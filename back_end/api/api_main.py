@@ -1,8 +1,8 @@
 import pandas as pd
+import numpy as np
 import sqlite3
 from pathlib import Path
 import yfinance as yf
-
 
 def db_getCode(con_path):
     print("db_connect 関数開始")
@@ -18,16 +18,27 @@ def db_getCode(con_path):
 
 def now_price(codes):
     print("now_price関数開始")
-    ticker_codes = [f"{code}.T" for code in codes]
-    print(ticker_codes)
     close_prices = {}
-    for i in ticker_codes:
-        df = yf.download(i,period="1d", progress=False)
-        val = df['Close'].iloc[-1]
-        close_prices[i] = float(val)
-    
+
+    for code in codes:
+        ticker = f"{code}.T"
+        print(ticker)
+        try:
+            df = yf.download(ticker,period="1d", progress=False)
+            if not df.empty:
+                val = float(df['Close'].iloc[-1])
+                print(val)
+                close_prices[code] = val
+            else:
+                print(f"{ticker}のデータがありません")
+
+        except Exception as e:
+            print(f"終値取得時にエラー:{ticker},{e}")
+
+    print("#------------------------------------------------------------#")
+    print(f"取得件数: {len(close_prices)}件")
     print("株価取得完了")
-    print(close_prices)
+    
     return close_prices
 
 def main_update():
