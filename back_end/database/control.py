@@ -2,7 +2,8 @@ from pathlib import Path
 import sqlite3
 import pandas as pd
 import os
-from api import api_main
+
+from back_end.api import api_main
 
 def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
     print("\ncontrole.py : CSV2DF読み込み開始")
@@ -36,15 +37,18 @@ def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
 
         # ユーザポートフォリオcsv
         in_col = ["コード"]
-        # print(f"コードis: {in_col}")
         df_main_code = df_main.loc[:,in_col]
         print("ユーザポートフォリオ読み込み完了")
-
+        print("#------------------------------#")
         #------------------ここで現在値取得かも？---------------------#
-        # ticker_codes = pd.read_csv(encoding="cp932", dtype={"コード": str})
-        # print(f"ticker_codes is : {ticker_codes}")
-        # current_value = api_main.main_mkDB()
-
+        # current_values =  api_main.main_mkDB(in_col)
+        for i in new_TSE_df:
+            print(i)
+        print("#------------------------------#")
+        
+            # value =[current_values]
+            # merged_df = pd.merge(df_main,)
+        # merged_df = pd.,merge(df_main_code,)
 
         merged_df = pd.merge(df_main_code, new_TSE_df, on="コード", how="left")
         merged_df["口座"] = acoount
@@ -82,12 +86,6 @@ def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
 def DF2DB(parents_dir,df,key):
     print("DF2DB開始")
     connect_path = parents_dir.joinpath("database", "user_data", "user_database.db")    
-    
-    #現在値取得(作業途中)
-    col_code = df.drop( columns=['name','qty','unit','current_value','industry','account','total_value'])
-    # print(f"Codes is: {col_code}")
-    col_code = col_code[['code']].values
-    current_values =  api_main.main_mkDB(col_code)
 
     #データベース作成
     if key == 0: 
@@ -152,3 +150,6 @@ def main():
     CSV2DF(input_FileDir,"user_portfolio_special.csv",TSE_data_path,parents_dir)
     CSV2DF(input_FileDir,"user_portfolio_accumulate.csv",TSE_data_path,parents_dir)
     CSV2DF(input_FileDir,"user_portfolio_spot.csv",TSE_data_path,parents_dir)
+
+if __name__ == "__main__":
+    main()

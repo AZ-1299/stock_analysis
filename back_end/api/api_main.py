@@ -20,15 +20,6 @@ def now_price(codes):
     print("now_price関数開始")
     close_prices = {}
 
-<<<<<<< HEAD
-    all_inf = []
-    all_inf.append(yf.download(ticker_codes,period='1d',interval="1d"))
-    now_price = all_inf.info.get('currentPrice')
-    print(now_price)
-    return 
-
-if __name__ == "__main__":
-=======
     for code in codes:
         ticker = f"{code}.T"
         print(ticker)
@@ -51,7 +42,6 @@ if __name__ == "__main__":
     return close_prices
 
 def main_update():
->>>>>>> 467963e24ff10f4bc348c541e9532c07141f92df
     print("input_data.py 開始")
     print("main_update 開始")
     root_dir = Path(__file__).resolve().parent.parent
@@ -66,13 +56,8 @@ def main_update():
     print("get codes")
     print(codes)
 
-<<<<<<< HEAD
-    dt = datetime.datetime.today()
-    ut = dt.date()
-    print(f"Now time is {ut}")
-    new_now_price = now_price(codes)
-=======
     current_value = now_price(codes)
+    print(current_value)
     return current_value
 
 def main_mkDB(ticker_codes):
@@ -87,4 +72,3 @@ def main_mkDB(ticker_codes):
 
 if __name__ == "__main__":
     main_update()
->>>>>>> 467963e24ff10f4bc348c541e9532c07141f92df
