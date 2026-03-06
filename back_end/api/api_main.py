@@ -17,20 +17,16 @@ def db_getCode(con_path):
     codes = [row[0] for row in cur.fetchall()]
     return codes
 
-def now_price(codes,ut):
+def now_price(codes):
     print("now_price関数開始")
     ticker_codes = [f"{code}.T" for code in codes]
     print(ticker_codes)
 
-    now_price = []
-    for i in ticker_codes:
-        now_price.append(yf.download(tickers=i,period='1d',interval="1d"))
-    
+    all_inf = []
+    all_inf.append(yf.download(ticker_codes,period='1d',interval="1d"))
+    now_price = all_inf.info.get('currentPrice')
     print(now_price)
-    return now_price
-
-    
-
+    return 
 
 if __name__ == "__main__":
     print("input_data.py 開始")
@@ -49,4 +45,4 @@ if __name__ == "__main__":
     dt = datetime.datetime.today()
     ut = dt.date()
     print(f"Now time is {ut}")
-    new_now_price = now_price(codes,ut)
+    new_now_price = now_price(codes)
