@@ -39,13 +39,14 @@ public static List<PortfolioRow> input_db() {
             List<PortfolioRow> rows = new ArrayList<>(); 
             while (rs.next()) {
                 rows.add(new PortfolioRow(
-                        rs.getString(1),
-                        rs.getString(2),
-                        rs.getInt(3),
-                        rs.getDouble(4),
-                        rs.getString(5),
-                        rs.getString(6),
-                        rs.getInt(7)));
+                        rs.getString("code"),
+                        rs.getString("name"),
+                        rs.getInt("qty"),
+                        rs.getDouble("unit"),
+                        rs.getString("industry"),
+                        rs.getString("account"),
+                        rs.getDouble("total_value")
+                ));
             }
             System.out.println(rows);
             //自動で切断される
@@ -56,12 +57,13 @@ public static List<PortfolioRow> input_db() {
             System.err.println(e);
             return new ArrayList<>();
         }
-
     }
-    public record PortfolioRow(String code, String name, Integer qty, Double unit, String industry, String account, Integer total_value) {
-        Object[] toArray() {return new Object[]{
-            code,name,qty,unit,industry,account,total_value
-        };
+
+    public record PortfolioRow(String code, String name, Integer qty, Double unit, String industry, String account, Double total_value) {
+        Object[] toArray() {
+            return new Object[]{
+                code, name, qty, unit, industry, account, total_value
+            };
         }
     }
 

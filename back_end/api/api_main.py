@@ -63,11 +63,10 @@ def main_update():
 def main_mkDB(ticker_codes):
     print("input_data.py 開始")
     print("main_kmDB 開始")
-    codes = db_getCode(ticker_codes)
-    print("get codes")
+    codes = ticker_codes 
+    print(f"受け取ったコード: {codes}")
 
     current_value = now_price(codes)
-    print(current_value)
     return current_value
 
 if __name__ == "__main__":

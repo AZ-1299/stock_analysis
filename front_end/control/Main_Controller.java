@@ -7,7 +7,7 @@ import java.nio.file.*;
 import javax.swing.JFileChooser;
 import java.util.logging.Logger;
 import java.util.logging.Level;
-
+import java.util.Map;
 
 //ファイル参照
 import stock_analysis.front_end.control.Main_Controller;
@@ -66,6 +66,11 @@ public class Main_Controller {
         String pythonScriptPath = scriptPath.toAbsolutePath().toString();
         ProcessBuilder go2py = new ProcessBuilder("python", "-u", pythonScriptPath);
 
+
+        Path projectRoot = Paths.get(selfPath, "..").normalize();
+        Map<String, String> env = go2py.environment();
+        env.put("PYTHONPATH", projectRoot.toAbsolutePath().toString());
+        
         go2py.redirectOutput(ProcessBuilder.Redirect.INHERIT);
         go2py.redirectError(ProcessBuilder.Redirect.INHERIT);
         System.out.println("INFO:実行フォイル" + pythonScriptPath);

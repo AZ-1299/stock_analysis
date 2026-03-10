@@ -3,7 +3,9 @@ import sqlite3
 import pandas as pd
 import os
 
-from back_end.api import api_main
+current_dir = Path(__file__).resolve().parent
+project_root = current_dir.parent.parent
+import back_end.api.api_main
 
 def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
     print("\ncontrole.py : CSV2DF読み込み開始")
@@ -40,15 +42,14 @@ def CSV2DF(input_FileDir,input_FilePath,TSE_data_path,parents_dir):
         df_main_code = df_main.loc[:,in_col]
         print("ユーザポートフォリオ読み込み完了")
         print("#------------------------------#")
-        #------------------ここで現在値取得かも？---------------------#
-        # current_values =  api_main.main_mkDB(in_col)
-        for i in new_TSE_df:
-            print(i)
+        code_list = df_main["コード"].tolist()
+        current_price_dict = back_end.api.api_main.main_mkDB(code_list)
+        df_main['現在値'] = df_main['コード'].map(current_price_dict)
+        df_main['評価額'] = df_main['数量'] * df_main['現在値']
+        merged_df = pd.merge(df_main_code, new_TSE_df, on="コード", how="left")
         print("#------------------------------#")
-        
-            # value =[current_values]
-            # merged_df = pd.merge(df_main,)
-        # merged_df = pd.,merge(df_main_code,)
+
+
 
         merged_df = pd.merge(df_main_code, new_TSE_df, on="コード", how="left")
         merged_df["口座"] = acoount
@@ -105,7 +106,7 @@ def DF2DB(parents_dir,df,key):
             for row in cur.execute(select_sql):
                 print(row)
 
-            update_sql = 'UPDATE user_database SET total_value = CAST(qty AS REAL) * CAST(unit AS REAL) WHERE total_value IS NULL;'
+            update_sql = 'UPDATE user_database SET total_value = CAST(qty AS REAL) * CAST(current_value AS REAL) WHERE total_value IS NULL;'            
             cur.execute(update_sql)
             conn.commit()
             cur.close()
