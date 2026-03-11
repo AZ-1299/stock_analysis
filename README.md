@@ -14,13 +14,15 @@
 
 + 業種別・銘柄別の保有比率を円グラフ・棒グラフで可視化 
 
-## 今後の開発予定（未実装）
++ 現在の株価を取得APIを用いて現在の株価を取得し、評価額を算出
+
+<!-- ## 今後の開発予定（未実装）
 
 - **現在の株価を取得**APIを用いて現在の株価を取得し、評価額を算出。
 
 - **配当金の予測**：過去の配当実績から自身の配当金額・利回りを算出
 
-- **指標取得**：PER／PBR／EPSを外部APIまたはローカルDBから自動取得  
+- **指標取得**：PER／PBR／EPSを外部APIまたはローカルDBから自動取得   -->
 
 <!-- - **配当予測**：想定年間配当額および配当利回りを算出   -->
 
@@ -31,75 +33,72 @@
 図を挿入
  -->
 
-## 動作環境・前提条件
+# 動作環境・前提条件
+- **OS:Windows10/11**
 
 - **Java 8以上（JDKがインストールされていること）**
 
 * **Python 3.8以上**
 
-* **Pythonライブラリ**：pandas, matplotlib, sqlite3
-
-<!-- + **バージョン管理**：Git
-
-## インストール手順
-
-1. **リポジトリをクローン**
-
+* **Pythonライブラリ**：
 ```bash
+# 基本データ解析・株価取得
+pip install pandas yfinance
+
+# グラフ描画関連
+pip install matplotlib japanize-matplotlib
+
+# ビルド・環境管理用
+pip install setuptools
+```
+
+# ディレクトリ構成
+```Plaintext
+stock_analysis/
+├── back_end/
+│   ├── api/
+│   ├── database/
+│   └── input_data/
+├── front_end/
+│   ├── bin/
+│   ├── control/
+│   └── gui/
+├── lib/
+│   └── sqlite-jdbc.jar
+└── run.bat (起動用スクリプト)
+```
+# 導入・環境構築
+## 1. リポジトリのクローン
+任意のディレクトリで以下のコマンドを実行し、ソースコードをローカルに取得する。
+```Bash
 git clone https://github.com/AZ-1299/stock_analysis.git
 cd stock_analysis
 ```
 
-2. **Python仮想環境の作成と有効化**
-
-```bash
-python3 -m venv venv
-source venv/bin/activate    # Linux/Mac
-# Windows (PowerShell): .\\venv\\Scripts\\Activate.ps1
+## 2. Python/仮想環境のセットアップ
+データ解析および株価取得に必要なライブラリをインストールする。
+```Bash
+python.exe -m pip install --upgrade pip
+. .\venv\Scripts\activate
+python .venv/bin
+pip install pandas
+pip install pathlib
+pip install setuptools
+pip install matplotlib
+pip install yfinance
+pip install japanize-matplotlib
 ```
+## 3.Java環境の確認
++ JDK17以上がインストールされていることを確認する
 
-3. **依存パッケージのインストール**
++ ```lib/sqlite-jdbc.jar```が存在することを確認すること（JDBCドライバがSQLiteとの接続に必要である）
 
-```bash
-pip install -r requirements.txt
+## 4.実行
+プロジェクトルートにある run.bat をダブルクリック、またはターミナルから実行する。
+
 ```
-
-4. **Java プロジェクトをビルド**
-
-```bash
-cd front_end
-# Unix系シェル
-javac -d bin src/**/*.java
-# Windows PowerShell
-Get-ChildItem -Recurse -Filter "*.java" | %{ javac -d bin $_.FullName }
-cd ..
+.\run.bat
 ```
-
-## 実行方法
-
-1. **リポジトリのルートへ移動**
-
-```bash
-cd stock_analysis
-```
-
-2. **Java GUI を起動**
-
-```bash
-# Linux/Mac
-java -cp front_end/bin stock_analysis.front_end.Gui.Main
-# Windows
-java -cp front_end\\bin stock_analysis.front_end.Gui.Main
-```
-
-3. **CSVを選択**
-- GUI上の「CSV読込」ボタンをクリックすると、Pythonスクリプトがバックエンドで実行されます。
-
-4. **結果の確認**
-
-- 分析結果はGUI上に表示。
-
-+ グラフは output/ フォルダにPNG形式で保存されます。 -->
 
 ## ライセンス
 

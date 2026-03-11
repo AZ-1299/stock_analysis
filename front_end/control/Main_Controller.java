@@ -95,10 +95,4 @@ public class Main_Controller {
         }
 
     }
-
-    // public void desp_imgGraph(){
-
-
-    // }
-    
 }
